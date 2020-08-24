@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+  <head>
+		<title>Marker</title>
+		<link type="text/css" rel="stylesheet" href="fonts/general-sans/style.css">
+		<link type="text/css" rel="stylesheet" href="index.css">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  </head>
+  <body>
+		<div class="container"></div>
+			<canvas id="draw-on-page-canvas"></canvas>
+			<div class="controls">
+				<svg width="23" viewBox="0 0 42 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;margin:22px auto 12px;display:block;">
+					<g id="Nudge" transform="matrix(1.46487,2.46519e-32,0,1.46487,-1141.43,-471.033)">
+						<circle cx="799.718" cy="323.413" r="1.86" style="fill:rgb(218,218,218);"/>
+						<g transform="matrix(1,0,0,1,6.09672,0)">
+							<circle cx="799.718" cy="323.413" r="1.86" style="fill:rgb(218,218,218);"/>
+						</g>
+						<g transform="matrix(1,0,0,1,0,6.01448)">
+							<circle cx="799.718" cy="323.413" r="1.86" style="fill:rgb(218,218,218);"/>
+						</g>
+						<g transform="matrix(1,0,0,1,6.09672,6.01448)">
+							<circle cx="799.718" cy="323.413" r="1.86" style="fill:rgb(218,218,218);"/>
+						</g>
+						<g transform="matrix(1,0,0,1,-12.6921,0)">
+							<circle cx="799.718" cy="323.413" r="1.86" style="fill:rgb(218,218,218);"/>
+						</g>
+						<g transform="matrix(1,0,0,1,-6.59542,0)">
+							<circle cx="799.718" cy="323.413" r="1.86" style="fill:rgb(218,218,218);"/>
+						</g>
+						<g transform="matrix(1,0,0,1,-12.6921,6.01448)">
+							<circle cx="799.718" cy="323.413" r="1.86" style="fill:rgb(218,218,218);"/>
+						</g>
+						<g transform="matrix(1,0,0,1,-6.59542,6.01448)">
+							<circle cx="799.718" cy="323.413" r="1.86" style="fill:rgb(218,218,218);"/>
+						</g>
+						<g transform="matrix(1,0,0,1,0,12.0359)">
+							<circle cx="799.718" cy="323.413" r="1.86" style="fill:rgb(218,218,218);"/>
+						</g>
+						<g transform="matrix(1,0,0,1,6.09672,12.0359)">
+							<circle cx="799.718" cy="323.413" r="1.86" style="fill:rgb(218,218,218);"/>
+						</g>
+						<g transform="matrix(1,0,0,1,-12.6921,12.0359)">
+							<circle cx="799.718" cy="323.413" r="1.86" style="fill:rgb(218,218,218);"/>
+						</g>
+						<g transform="matrix(1,0,0,1,-6.59542,12.0359)">
+							<circle cx="799.718" cy="323.413" r="1.86" style="fill:rgb(218,218,218);"/>
+						</g>
+						<g transform="matrix(1,0,0,1,-18.6549,0)">
+							<circle cx="799.718" cy="323.413" r="1.86" style="fill:rgb(218,218,218);"/>
+						</g>
+						<g transform="matrix(1,0,0,1,-18.6549,6.01448)">
+							<circle cx="799.718" cy="323.413" r="1.86" style="fill:rgb(218,218,218);"/>
+						</g>
+						<g transform="matrix(1,0,0,1,-18.6549,12.0359)">
+							<circle cx="799.718" cy="323.413" r="1.86" style="fill:rgb(218,218,218);"/>
+						</g>
+					</g>
+				</svg>
+
+				<div class="options">
+					<div class="item" style="margin-bottom:14px">
+						<div class="title">Pen</div>
+						<label for="draw-brushing-line-color" style="cursor:pointer">
+							<svg width="50" height="50" viewBox="0 0 95 95" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;margin:auto;display:block;">
+								<g transform="matrix(1.68799,-1.62232e-16,1.62232e-16,1.68799,-1242.02,-756.616)">
+									<path id="color" d="M791.822,476.245C791.822,468.817 788.87,461.692 783.618,456.439C778.365,451.186 771.24,448.235 763.812,448.235L763.809,448.235C756.38,448.235 749.256,451.186 744.003,456.439C738.75,461.692 735.799,468.817 735.799,476.245L735.799,499.206C735.799,501.996 738.061,504.258 740.851,504.258L763.812,504.258C771.24,504.258 778.365,501.307 783.618,496.054C788.87,490.801 791.822,483.677 791.822,476.248L791.822,476.245Z"/>
+								</g>
+								<g transform="matrix(1.46125,1.2326e-32,1.62232e-16,1.46125,-946.968,-214.959)">
+									<path id="pen" d="M687.926,176.583L689.728,178.386L679.397,188.717C679.397,188.717 679.815,189.135 680.275,189.595C680.591,189.911 681.019,190.088 681.466,190.088C681.913,190.088 682.342,189.911 682.658,189.595C685.037,187.216 690.352,181.9 692.732,179.521C693.048,179.205 693.225,178.776 693.225,178.329C693.225,177.882 693.048,177.454 692.732,177.138C692.272,176.678 691.854,176.26 691.854,176.26L691.85,176.264L690.047,174.462L690.05,174.458L683.858,168.266L665.497,186.627C665.497,186.627 663.483,192.092 662.453,194.884C662.347,195.172 662.419,195.494 662.636,195.71C662.853,195.926 663.176,195.996 663.463,195.889C666.247,194.85 671.689,192.819 671.689,192.819L687.926,176.583ZM686.14,165.984L692.332,172.177L693.106,171.403C693.794,170.715 694.18,169.783 694.18,168.81C694.18,167.838 693.794,166.905 693.106,166.217C692.773,165.884 692.432,165.543 692.099,165.21C691.411,164.523 690.478,164.136 689.506,164.136C688.534,164.136 687.601,164.523 686.913,165.21L686.14,165.984Z"/>
+								</g>
+							</svg>
+						</label>
+						<input type="color" id="draw-brushing-line-color" style="display:none">
+					</div>
+					<input id="collapsible" class="toggle" style="display:none" type="checkbox"> 
+					<div class="collapsible-content">
+						<div class="item">
+							<div class="title">Clarity</div>
+							<label for="draw-brushing-line-opacity">
+								<div id="opacity" style="width:50px;height:50px;margin:auto;border-radius:50px">
+									<svg width="22" height="22" viewBox="0 0 39 39" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;margin:14px">
+										<g transform="matrix(0.976767,-8.23921e-33,8.23921e-33,0.976767,-743.646,-384.945)">
+											<path id="text" d="M800.464,401.31C800.464,397.331 797.234,394.101 793.256,394.101L768.543,394.101C764.565,394.101 761.335,397.331 761.335,401.31L761.335,426.023C761.335,430.001 764.565,433.231 768.543,433.231L793.256,433.231C797.234,433.231 800.464,430.001 800.464,426.023L800.464,401.31ZM797.464,401.31C797.464,398.987 795.578,397.101 793.256,397.101L768.543,397.101C766.22,397.101 764.335,398.987 764.335,401.31L764.335,426.023C764.335,428.345 766.22,430.231 768.543,430.231L793.256,430.231C795.578,430.231 797.464,428.345 797.464,426.023L797.464,401.31ZM782.773,426.545L778.944,426.545L778.944,405L770.789,405L770.789,401.55L790.928,401.55L790.928,405L782.773,405L782.773,426.545Z" style="fill:white;"/>
+										</g>
+									</svg>
+								</div>
+							</label>
+							<input drag="disabled" type="range" min="0.15" max="1" step="0.01" id="draw-brushing-line-opacity" style="margin:10px auto;display:block">
+						</div>
+						<div class="item">
+							<div class="title">Size</div>
+							<label for="draw-brushing-line-width">
+								<div style="width:50px;height:50px;margin:auto;border-radius:50px;border:1px solid #E7E7E7;position:relative">
+									<div id="width" style="border-radius:50px;transform:translate(-50%,-50%);position:absolute;top:50%;left:50%;"></div>
+								</div>
+							</label>
+							<input drag="disabled" type="range" min="12" max="47" id="draw-brushing-line-width" style="margin:10px auto;display:block">
+						</div>
+					</div>
+  					<label for="collapsible" id="shrink">
+						<svg width="12" height="8" viewBox="0 0 24 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+							<g transform="matrix(1.46125,2.46519e-32,0,1.46125,9.49815e-07,-5.84501)">
+								<path id="caret" d="M8,13C8.401,13 8.778,12.842 9.06,12.557L15.708,5.724C16.098,5.329 16.098,4.691 15.708,4.296C15.317,3.901 14.684,3.901 14.294,4.296L8,10.772L1.707,4.296C1.317,3.901 0.684,3.901 0.293,4.296C-0.098,4.691 -0.098,5.329 0.293,5.724L6.939,12.557C7.223,12.842 7.598,13 8,13Z"/>
+							</g>
+						</svg>
+					</label>
+				</div>
+
+				<!-- START: Coming Soon -->
+				<div class="button flex" style="display: none">
+					<button id="clear" title="Clear all drawings"></button>
+					<button id="close" title="Close"></button>
+					<button id="show" title="Show|Hide Controls"></button>
+					<button id="hide" title="Show|Hide Controls"></button>
+					<button id="undo" title="Undo"></button>
+					<button id="redo" title="Redo"></button>
+					<button id="png" title="Save Dawing Only as a PNG file"></button>
+					<button id="print" title="Print Drawing"></button>
+					<button id="reload" title="Reload UI"></button>
+					<button id="support" title="Open support page"></button>
+					<button id="donation" title="Make a donation"></button>
+
+					<div class="item flex draw-brushing-selector">
+						<button id="Pencil" title="Pencil Brush"></button>
+						<button id="Circle" title="Circle Brush"></button>
+						<button id="Spray" title="Spray Brush"></button>
+					</div>
+
+					<div class="item flex draw-shape-selector">
+						<button id="Circle" title="Draw Circle"></button>
+						<button id="Hexagon" title="Draw Hexagon"></button>
+						<button id="Octagon" title="Draw Octagon"></button>
+						<button id="Rect" title="Draw Rectangle"></button>
+						<button id="Triangle" title="Draw Triangle"></button>
+						<button id="Line" title="Draw Line"></button>
+						<button id="Move" title="Move objects"></button>
+					</div>
+					
+					<button id="zoom-in" title="Zoom in (Shift + mouse wheel up)"></button>
+					<button id="zoom-out" title="Zoom out (Shift + mouse wheel down)"></button>
+
+					<button id="copy" title="Copy selection"></button>
+					<button id="paste" title="Paste clipboard"></button>
+					<button id="remove" title="Remove selection"></button>
+					<button id="clear" title="Clear all drawings"></button>
+					<button id="save" title="Save all drawings"></button>
+					<button id="hide" title="Show|Hide Controls"></button>
+
+					<label class="button" for="draw-shape-fill-color">Fill</label>
+					<label class="button" for="draw-background-color">Background</label>
+					<label class="button" for="draw-brushing-stroke-color">Stroke</label>
+					<label class="button" for="draw-brushing-shadow-color">Shadow</label>
+
+					<input type="color" id="draw-shape-fill-color">
+					<input type="color" id="draw-background-color">
+					<input type="color" id="draw-brushing-stroke-color">
+					<input type="color" id="draw-brushing-shadow-color">
+
+					<div class="item shrink">
+						<label for="draw-brushing-shadow-width">Shadow width (px)</label>
+						<span class="info"></span><input type="range" min="0" max="50" id="draw-brushing-shadow-width">
+					</div>
+					<div class="item shrink">
+						<label for="draw-brushing-stroke-width">Stroke width (px)</label>
+						<span class="info"></span><input drag="disabled" type="range" min="0" max="150" id="draw-brushing-stroke-width">
+					</div>
+					<div class="item shrink">
+						<label for="draw-brushing-shadow-offset">Shadow offset (px)</label>
+						<span class="info"></span><input type="range" min="0" max="50" id="draw-brushing-shadow-offset">
+					</div>
+					<div class="item shrink">
+						<label for="draw-shape-fill-opacity">Shape opacity (%)</label>
+						<span class="info"></span><input type="range" min="0" max="1" step="0.01" id="draw-shape-fill-opacity">
+					</div>
+				</div>
+			</div>
+			<!-- END: Coming Soon -->
+		</div>
+		<!-- -->
+    <script type="text/javascript" src="vendor/fabric.js"></script>
+    <script type="text/javascript" src="index.js"></script>
+  </body>
+</html>

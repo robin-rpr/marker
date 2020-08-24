@@ -1,0 +1,30 @@
+{
+    "version": "1.0.0",
+    "manifest_version": 2,
+    "name": "Marker",
+    "offline_enabled": true,
+    "short_name": "marker-ink",
+    "background": {"scripts": ["lib/background.js"]},
+    "permissions": ["storage", "activeTab", "contextMenus"],
+    "web_accessible_resources": ["data/interface/index.html"],
+    "homepage_url": "https://marker.ink",
+    "description": "Easily draw on any website with simple drawing tools, then save the result.",
+    "browser_action": {
+      "default_title": "Marker",
+      "default_icon": {
+        "16": "data/icons/OFF/16.png",
+        "32": "data/icons/OFF/32.png",
+        "48": "data/icons/OFF/48.png",
+        "64": "data/icons/OFF/64.png",
+        "96": "data/icons/OFF/96.png"
+      }
+    },
+    "icons": {
+        "16": "data/icons/16.png",
+        "32": "data/icons/32.png",
+        "48": "data/icons/48.png",
+        "64": "data/icons/64.png",
+        "96": "data/icons/96.png",
+        "128": "data/icons/128.png"
+    }
+}

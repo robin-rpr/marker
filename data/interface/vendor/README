@@ -1,0 +1,3 @@
+This addon uses the following opensource library:
+
+fabric.js: https://github.com/fabricjs/fabric.js/archive/refs/tags/v500.zip >> fabric.js-500 >> dist >> fabric.js

@@ -1,0 +1,439 @@
+html {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  margin: 0;
+  border: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: 'GeneralSans', sans-serif !important;
+}
+
+.container {
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
+
+.container canvas {
+  left: 0;
+  top: 5px;
+  border: 0;
+  width: 100%;
+  height: 100%;
+  outline: none;
+}
+
+.controls {
+  width: 83px;
+  cursor: normal;
+  display: none;
+  position: fixed;
+  top: 21px;
+  right: 21px;
+  border-radius: 12px;
+  background: rgb(255,255,255);
+}
+
+.options {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  margin-bottom: 5px;
+}
+
+.item {
+  margin: 0;
+  border: 0;
+  padding: 0;
+  text-align: left;
+  margin-bottom: 10px;
+  background-color: #fff;
+}
+
+.item:last-child {
+  margin-bottom: 11px;
+}
+
+.item .title {
+  font-size: 14px;
+  font-weight: 490;
+  text-align: center;
+  width: 100%;
+  margin-bottom: 12px;
+  pointer-events: none;
+}
+
+#shrink {
+  display: block;
+  cursor: pointer;
+  border-radius: 7px;
+  transition: all 0.25s ease-out;
+  padding: 3px 32px 6px 32px;
+  margin: 4px;
+}
+#shrink:hover {
+  opacity: 0.9;
+}
+.toggle:checked ~ #shrink > svg {
+  transform: rotate(180deg);
+}
+.collapsible-content {
+  max-height: 0px;
+  overflow: hidden;
+  transition: max-height 0.25s ease-in-out;
+}
+.toggle:checked + .collapsible-content {
+  max-height: 350px;
+}
+
+
+.controls .options .item #Spray {background: url('icons/Spray.png') no-repeat center center}
+.controls .options .item #Pencil {background: url('icons/Pencil.png') no-repeat center center}
+.controls .options .item #Circle {background: url('icons/Dotted.png') no-repeat center center}
+
+.controls .options .item #Rect {background: url('icons/Rect.png') no-repeat center center}
+.controls .options .item #Line {background: url('icons/Line.png') no-repeat center center}
+.controls .options .item #Move {background: url('icons/Move.png') no-repeat center center}
+.controls .options .item #Circle {background: url('icons/Circle.png') no-repeat center center}
+.controls .options .item #Hexagon {background: url('icons/Hexagon.png') no-repeat center center}
+.controls .options .item #Octagon {background: url('icons/Octagon.png') no-repeat center center}
+.controls .options .item #Triangle {background: url('icons/Triangle.png') no-repeat center center}
+
+.controls .button #copy {background: url('icons/Copy.png') no-repeat center center}
+.controls .button #save {background: url('icons/Save.png') no-repeat center center}
+.controls .button #hide {background: url('icons/Hide.png') no-repeat center center}
+.controls .button #paste {background: url('icons/Paste.png') no-repeat center center}
+.controls .button #clear {background: url('icons/Clear.png') no-repeat center center}
+.controls .button #remove {background: url('icons/Remove.png') no-repeat center center}
+.controls .button #zoom-in {background: url('icons/Zoom-in.png') no-repeat center center}
+.controls .button #zoom-out {background: url('icons/Zoom-out.png') no-repeat center center}
+
+.hide {
+  display: none;
+}
+
+.fixed {
+  top: -1px;
+  left: -40px;
+  width: 38px;
+  flex-flow: wrap;
+  position: absolute;
+}
+
+.fixed button {
+  opacity: 0.5;
+  min-width: 38px;
+}
+
+.fixed button:hover {
+  opacity: 0.7;
+  background-color: #d8d8d8 !important;
+}
+
+input[type="range"] {
+  margin: 0;
+  padding: 0;
+  width: 63px;
+  height: 13px;
+  cursor: pointer;
+  margin-left: 5px;
+  box-sizing: border-box;
+  vertical-align: middle;
+  -webkit-appearance: none;
+}
+
+input[type=range]:focus {
+  outline: none;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 2px;
+  cursor: pointer;
+  background: #DADADA;
+  border-radius: 2px;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  height: 13px;
+  width: 13px;
+  border-radius: 13px;
+  background: black;
+  cursor: pointer;
+  border: none;
+  -webkit-appearance: none;
+  margin-top: -6.5px;
+}
+
+input[type=range]:focus::-webkit-slider-runnable-track {
+  background: #DADADA;
+}
+
+input[type=range]::-moz-range-track {
+  width: 100%;
+  height: 2px;
+  cursor: pointer;
+  background: #DADADA;
+  border-radius: 2px;
+}
+
+input[type=range]::-moz-range-thumb {
+  height: 13px;
+  width: 13px;
+  border-radius: 13px;
+  background: black;
+  cursor: pointer;
+  margin-top: -6.5px;
+  border: none;
+}
+
+.controls .options input[type="color"] {
+  border: 0;
+  margin: 0;
+  padding: 1px;
+  height: 32px;
+  outline: none;
+  cursor: pointer;
+  max-width: 48px;
+  background: #fff;
+  box-sizing: border-box;
+  vertical-align: middle;
+}
+
+.controls .button button {
+  margin: 0;
+  border: 0;
+  padding: 0;
+  color: #555;
+  width: 100%;
+  height: 38px;
+  outline: none;
+  cursor: pointer;
+  font-size: 12px;
+  max-width: 38px;
+  text-decoration: none;
+  background-color: #fff;
+  background-size: 16px !important;
+  transition: 300ms ease background-color;
+}
+
+.controls .button button:hover {
+  background-color: rgba(0,0,0,0.1);
+}
+
+.controls .options .info {
+  padding: 0;
+  width: 38px;
+  color: #333;
+  float: right;
+  height: 38px;
+  font-size: 11px;
+  overflow: hidden;
+  line-height: 38px;
+  text-align: right;
+  white-space: nowrap;
+  background-color: #fff;
+  vertical-align: middle;
+  text-overflow: ellipsis;
+}
+
+.canvas-container, .canvas-container canvas {
+  border: 0;
+  outline: none;
+  max-width: 100vw;
+  height: 100vw !important;
+  border-bottom: solid 1px rgba(0,0,0,0.1);
+}
+
+html[context="popup"] .actions {left: 1px}
+html[context="popup"] .toolbar {right: 1px}
+html[context="popup"] #print {display: none}
+
+html[context="page"] .close {
+  left: 1px;
+  display: block;
+}
+
+html[context="page"] .actions {
+  top: 43px;
+  left: 1px;
+}
+
+html[context="page"] .close > table tr td, 
+html[context="page"] .actions > table tr td {
+  background-color: #1e90ff;
+}
+
+html[context="page"] .close > table tr td svg, 
+html[context="page"] .actions > table tr td svg {
+  fill: #fff;
+}
+
+html[context="page"] .toolbar {
+  display: none;
+}
+
+html[context="page"] .controls {
+  box-shadow: 0 1px 14.8px #BCBECA;
+}
+
+html[context="webapp"] .toolbar {
+  display: none;
+}
+
+html[context="webapp"] .controls {
+  top: 1px;
+  right: 1px;
+  left: unset;
+}
+
+@media print {
+  .toolbar, .controls, .actions, .close {
+    display: none !important;
+  }
+  .canvas-container, .canvas-container canvas {
+    border-bottom: none;
+  }
+}
+
+.right-click {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  pointer-events: none;
+  padding: 2vw;
+  border-radius: 1vw;
+  font-size: 2.4vw;
+  background-color: #fff;
+}
+
+/* Context Menu */
+.contextMenu {
+  --menu-border: rgba(255, 255, 255, 0.08);
+  --menu-bg: linear-gradient(
+    45deg,
+    rgba(10, 20, 28, 0.2) 0%,
+    rgba(10, 20, 28, 0.7) 100%
+  );
+  --item-border: rgba(255, 255, 255, 0.1);
+  --item-color: #fff;
+  --item-bg-hover: rgba(255, 255, 255, 0.1);
+  height: 0;
+  overflow: hidden;
+  background: var(--menu-bg);
+  -webkit-backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
+  position: fixed;
+  top: var(--top);
+  left: var(--left);
+  -webkit-animation: menuAnimation 0.4s 0s both;
+          animation: menuAnimation 0.4s 0s both;
+  transform-origin: left;
+  list-style: none;
+  margin: 4px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  z-index: 999999999;
+  box-shadow: 0 0 0 1px var(--menu-border), 0 2px 2px rgba(0, 0, 0, 0.03), 0 4px 4px rgba(0, 0, 0, 0.04), 0 10px 8px rgba(0, 0, 0, 0.05), 0 15px 15px rgba(0, 0, 0, 0.06), 0 30px 30px rgba(0, 0, 0, 0.07), 0 70px 65px rgba(0, 0, 0, 0.09);
+}
+.contextMenu-item {
+  padding: 4px;
+}
+.contextMenu-item[data-divider=top] {
+  border-top: 1px solid;
+}
+.contextMenu-item[data-divider=bottom] {
+  border-bottom: 1px solid;
+}
+.contextMenu-item[data-divider=top-bottom] {
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+}
+.contextMenu-item[data-divider] {
+  border-color: var(--item-border);
+}
+.contextMenu-button {
+  color: var(--item-color);
+  background: 0;
+  border: 0;
+  white-space: nowrap;
+  width: 100%;
+  border-radius: 4px;
+  padding: 6px 24px 6px 7px;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  width: 100%;
+  -webkit-animation: menuItemAnimation 0.2s 0s both;
+          animation: menuItemAnimation 0.2s 0s both;
+  font-family: "Inter", sans-serif;
+  cursor: pointer;
+}
+.contextMenu-button:hover {
+  background-color: var(--item-bg-hover);
+}
+.contextMenu[data-theme=light] {
+  --menu-bg: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.45) 0%,
+    rgba(255, 255, 255, 0.85) 100%
+  );
+  --menu-border: rgba(0, 0, 0, 0.08);
+  --item-border: rgba(0, 0, 0, 0.1);
+  --item-color: rgb(10, 20, 28);
+  --item-bg-hover: rgba(10, 20, 28, 0.09);
+}
+
+@-webkit-keyframes menuAnimation {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  100% {
+    height: var(--height);
+    opacity: 1;
+    border-radius: 8px;
+    transform: scale(1);
+  }
+}
+
+@keyframes menuAnimation {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  100% {
+    height: var(--height);
+    opacity: 1;
+    border-radius: 8px;
+    transform: scale(1);
+  }
+}
+@-webkit-keyframes menuItemAnimation {
+  0% {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes menuItemAnimation {
+  0% {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
