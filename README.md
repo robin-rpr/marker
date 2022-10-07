@@ -2,7 +2,7 @@
 
 <img title="Draw" src="logo.png" width=25% align="right" /> [![master](https://github.com/robin-rpr/draw/actions/workflows/master.yml/badge.svg)](https://github.com/robin-rpr/draw/actions/workflows/master.yml)
 
-# Draw
+# Marker
 
 Draw is a Mozilla Firefox Browser Add-On that lets you draw on any Website.
 
