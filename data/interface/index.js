@@ -145,7 +145,6 @@ var config  = {
       target.style.display = target.style.display === "none" ? "block" : "none";
     },
     "update": function () {
-
       function isBright(rgbHex) {
         var rgb = config.draw.convert.to.rgb(rgbHex);
         var luma = 0.2126 * rgb[0] + 0.7152 * rgb[1] + 0.0722 * rgb[2]; // per ITU-R BT.709
@@ -165,6 +164,10 @@ var config  = {
       target.style.width = config.draw.brushing.line.width.value + 'px';
       target.style.height = config.draw.brushing.line.width.value + 'px';
       target.style.opacity = config.draw.brushing.line.opacity.value;
+
+      var target = document.getElementById('cursor');
+      target.style.width = parseInt(config.draw.brushing.line.width.value) - 1 + 'px';
+      target.style.height = parseInt(config.draw.brushing.line.width.value) - 1 + 'px';
 
       var target = document.querySelector("#shrink");
       target.style.background = config.draw.convert.to.mix(
@@ -409,6 +412,22 @@ var config  = {
         config.draw.screen -= 1;
       }
     },
+    "disable": function () {
+      var target = document.querySelector('.canvas-container');
+      target.style.pointerEvents = 'none';
+
+      var target = document.querySelector('.controls');
+      target.style.opacity = '0.7';
+      target.style.cursor = 'pointer';
+    },
+    "enable": function () {
+      var target = document.querySelector('.canvas-container');
+      target.style.pointerEvents = 'auto';
+
+      var target = document.querySelector('.controls');
+      target.style.opacity = '1';
+      target.style.cursor = 'normal';
+    },
     "remove": {
       "active": {
         "objects": function () {
@@ -520,7 +539,7 @@ var config  = {
             var key = value + "Brush";
             config.draw.canvas.freeDrawingBrush = new fabric[key](config.draw.canvas, {"originX": "center", "originY": "center"});
             if (config.draw.canvas.freeDrawingBrush) {
-              var opacity = config.draw.convert.to.hexadecimal(config.draw.brushing.line.opacity.value * 225);
+              var opacity = config.draw.convert.to.hexadecimal(config.draw.brushing.line.opacity.value * 255);
               config.draw.canvas.freeDrawingBrush.color = config.draw.brushing.line.color.value + opacity;
               config.draw.canvas.freeDrawingBrush.width = parseInt(config.draw.brushing.line.width.value, 10) || 1;
               config.draw.canvas.freeDrawingBrush.shadow = new fabric.Shadow(config.draw.brushing.options(config.draw.brushing.shadow));
@@ -597,7 +616,7 @@ var config  = {
       /*  */
       config.draw.brushing.line.color.addEventListener("input", function () {
         config.storage.write("line.color", this.value);
-        var opacity = config.draw.convert.to.hexadecimal(config.draw.brushing.line.opacity.value * 225);
+        var opacity = config.draw.convert.to.hexadecimal(config.draw.brushing.line.opacity.value * 255);
         config.draw.canvas.freeDrawingBrush.color = this.value + opacity;
         config.controls.update();
       });
@@ -615,7 +634,7 @@ var config  = {
       /*  */
       config.draw.brushing.line.opacity.addEventListener("input", function () {
         config.storage.write("line.opacity", this.value);
-        var opacity = config.draw.convert.to.hexadecimal(this.value * 225);
+        var opacity = config.draw.convert.to.hexadecimal(this.value * 255);
         config.controls.update();
         config.draw.canvas.freeDrawingBrush.color = config.draw.brushing.line.color.value + opacity;
       });
@@ -795,7 +814,37 @@ var config  = {
     var support = document.getElementById("support");
     var zoomout = document.getElementById("zoom-out");
     var donation = document.getElementById("donation");
-
+    var cursor = document.getElementById('cursor');
+    var crosshair = document.getElementById('crosshair');
+    var controls = document.querySelector(".controls");
+    /*  */
+    var drawing = false;
+    window.addEventListener('mousemove', (e)=> {
+      const mouseY = e.clientY;
+      const mouseX = e.clientX;
+      crosshair.style.transform = `translate3d(calc(${mouseX}px - 50%), calc(${mouseY}px - 50%), 0)`;
+      cursor.style.transform = `translate3d(calc(${mouseX}px - 50%), calc(${mouseY}px - 50%), 0)`;
+      if (drawing) {
+        crosshair.style.display = 'block';
+      } else {
+        cursor.style.display = 'block';
+      }
+    })
+    window.addEventListener('mouseout', (e) => {
+      drawing = false;
+      crosshair.style.display = 'none';
+      cursor.style.display = 'none';
+    })
+    window.addEventListener('mousedown', (e) => {
+      drawing = true;
+      crosshair.style.display = 'block';
+      cursor.style.display = 'none';
+    })
+    window.addEventListener('mouseup', (e) => {
+      drawing = false;
+      crosshair.style.display = 'none';
+      cursor.style.display = 'block';
+    })
     /*  */
     config.draw.brushing.controls = document.querySelector(".controls");
     config.draw.shape.selector = document.querySelector(".draw-shape-selector");
@@ -822,6 +871,10 @@ var config  = {
       chrome.tabs.create({"url": url, "active": true});
     }, false);
     /*  */
+    controls.addEventListener("click", function () {
+      config.draw.enable()
+    }, false)
+    /*  */
     document.addEventListener("keydown", function (e) {
       var key = e.key ? e.key : e.code;
       var arrow = key.indexOf("Arrow") === 0;
@@ -829,6 +882,7 @@ var config  = {
       /*  */
       config.draw.keyborad.code = code;
       /*  */
+      if (code === 27) config.draw.disable();
       if (e.ctrlKey && code === 67) config.draw.copy();
       if (e.ctrlKey && code === 89) config.draw.redo();
       if (e.ctrlKey && code === 90) config.draw.undo();
@@ -851,7 +905,6 @@ var config  = {
       if (flag) {
         config.storage.write("last.draw", '');
         config.draw.canvas.clear();
-        //document.location.reload();
       }
     });
     /*  */
