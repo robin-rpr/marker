@@ -1,6 +1,6 @@
 {
   "name": "marker",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Easily draw on any website with simple drawing tools, then save the result.",
   "main": "manifest.json",
   "directories": {
