@@ -58,11 +58,7 @@ body {
   top: 21px;
   right: 21px;
   border-radius: 12px;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 1) 0%,
-    rgba(255, 255, 255, 0.7) 100%
-  );
+  background: white;
   backdrop-filter: blur(40px);
 }
 
@@ -273,11 +269,7 @@ html[context="webapp"] .controls {
 /* Context Menu */
 .contextMenu {
   --menu-border: rgba(255, 255, 255, 0.08);
-  --menu-bg: linear-gradient(
-    45deg,
-    rgba(10, 20, 28, 0.2) 0%,
-    rgba(10, 20, 28, 0.7) 100%
-  );
+  --menu-bg: white;
   --item-border: rgba(255, 255, 255, 0.1);
   --item-color: #fff;
   --item-bg-hover: rgba(255, 255, 255, 0.1);
@@ -338,11 +330,7 @@ html[context="webapp"] .controls {
   background-color: var(--item-bg-hover);
 }
 .contextMenu[data-theme=light] {
-  --menu-bg: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 1) 0%,
-    rgba(255, 255, 255, 0.7) 100%
-  );
+  --menu-bg: white;
   --menu-border: rgba(0, 0, 0, 0.08);
   --item-border: rgba(0, 0, 0, 0.1);
   --item-color: rgb(10, 20, 28);

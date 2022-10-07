@@ -1,0 +1,28 @@
+{
+  "name": "marker",
+  "version": "1.0.0",
+  "description": "Easily draw on any website with simple drawing tools, then save the result.",
+  "main": "manifest.json",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "web-ext lint",
+    "start": "web-ext run",
+    "build": "web-ext build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/robin-rpr/marker.git"
+  },
+  "author": "Robin Röper <rr@linux.com>",
+  "license": "MPL-2.0",
+  "bugs": {
+    "url": "https://github.com/robin-rpr/marker/issues"
+  },
+  "homepage": "https://marker.ink",
+  "devDependencies": {
+    "web-ext": "^7.2.0"
+  }
+}

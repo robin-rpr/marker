@@ -96,6 +96,7 @@ var config  = {
       const button = document.createElement("BUTTON");
       const item = document.createElement("LI");
   
+      /* TODO: Sanitize insecure innerHTML */
       button.innerHTML = data.content;
       button.classList.add("contextMenu-button");
       item.classList.add("contextMenu-item");
