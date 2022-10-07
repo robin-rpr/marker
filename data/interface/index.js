@@ -58,6 +58,7 @@ var background = {
 };
 
 var config  = {
+  "id": null,
   "contextMenu": {
     "target": null,
     "menuItems": [],
@@ -157,31 +158,31 @@ var config  = {
       target.style.fill = config.draw.brushing.line.color.value;
 
       var target = document.querySelector("#opacity");
-      target.style.background = config.draw.brushing.line.color.value;
-      target.style.opacity = config.draw.brushing.line.opacity.value;
+      target.style.background = config.draw.convert.to.mix(
+        config.draw.brushing.line.color.value,
+        '#ffffff',
+        config.draw.brushing.line.opacity.value
+      );
+
+      var color = isBright(config.draw.convert.to.hex(target.style.background)) ? 'black' : 'white';
+      var target = document.querySelector("#text");
+      target.style.fill = color;
 
       var target = document.querySelector("#width");
-      target.style.background = config.draw.brushing.line.color.value;
+      target.style.background = config.draw.convert.to.mix(
+        config.draw.brushing.line.color.value,
+        '#ffffff',
+        config.draw.brushing.line.opacity.value
+      );
       target.style.width = config.draw.brushing.line.width.value + 'px';
       target.style.height = config.draw.brushing.line.width.value + 'px';
-      target.style.opacity = config.draw.brushing.line.opacity.value;
 
       var target = document.getElementById('cursor');
       target.style.width = parseInt(config.draw.brushing.line.width.value) - 1 + 'px';
       target.style.height = parseInt(config.draw.brushing.line.width.value) - 1 + 'px';
 
-      var target = document.querySelector("#shrink");
-      target.style.background = config.draw.convert.to.mix(
-        config.draw.brushing.line.color.value,
-        '#ffffff',
-        0.25
-      );
 
       /* Contrast */
-      var color = isBright(config.draw.convert.to.hex(target.style.background)) ? 'black' : 'white';
-      var target = document.querySelector("#caret");
-      target.style.fill = color;
-      
       var target = document.querySelector("#pen");
       target.style.fill = isBright(config.draw.brushing.line.color.value) ? 'black' : 'white';
 
@@ -224,6 +225,8 @@ var config  = {
         if (data !== '' && data !== null && data !== undefined) {
           var tmp = {};
           tmp[id] = data;
+          tmp["last.id"] = config.id;
+          config.storage.local["last.id"] = config.id;
           config.storage.local[id] = data;
           chrome.storage.local.set(tmp, function () {});
         } else {
@@ -267,12 +270,12 @@ var config  = {
       config.draw.brushing.line.width.value = config.storage.read("line.width") !== undefined ? config.storage.read("line.width") : 20;
       config.draw.shape.stroke.width.value = config.storage.read("stroke.width") !== undefined ? config.storage.read("stroke.width") : 5;
       config.draw.shape.fill.opacity.value = config.storage.read("fill.opacity") !== undefined ? config.storage.read("fill.opacity") : 1;
-      config.draw.shape.fill.color.value = config.storage.read("fill.color") !== undefined ? config.storage.read("fill.color") : "#3272DF";
+      config.draw.shape.fill.color.value = config.storage.read("fill.color") !== undefined ? config.storage.read("fill.color") : "#0169FF";
       config.draw.brushing.shadow.width.value = config.storage.read("shadow.width") !== undefined ? config.storage.read("shadow.width") : 0;
       config.draw.brushing.line.opacity.value = config.storage.read("line.opacity") !== undefined ? config.storage.read("line.opacity") : 1;
-      config.draw.brushing.line.color.value = config.storage.read("line.color") !== undefined ? config.storage.read("line.color") : "#3272DF";
+      config.draw.brushing.line.color.value = config.storage.read("line.color") !== undefined ? config.storage.read("line.color") : "#0169FF";
       config.draw.brushing.shadow.offset.value = config.storage.read("shadow.offset") !== undefined ? config.storage.read("shadow.offset") : 0;
-      config.draw.shape.stroke.color.value = config.storage.read("stroke.color") !== undefined ? config.storage.read("stroke.color") : "#3272DF";
+      config.draw.shape.stroke.color.value = config.storage.read("stroke.color") !== undefined ? config.storage.read("stroke.color") : "#0169FF";
       config.draw.brushing.shadow.color.value = config.storage.read("shadow.color") !== undefined ? config.storage.read("shadow.color") : "#777777";
       config.draw.background.color.value = config.storage.read("background.color") !== undefined ? config.storage.read("background.color") : "#ffffff";
       config.draw.shape.selector.setAttribute("selected", config.storage.read("shape.selector") !== undefined ? config.storage.read("shape.selector") : "Circle");
@@ -307,18 +310,22 @@ var config  = {
       /*  */
       var last = config.storage.read("last.draw");
       if (last) {
-        config.draw.canvas.loadFromJSON(JSON.parse(last));
-        if (config.port.name === "page") {
-          config.draw.canvas.backgroundColor = "transparent";
+        last = JSON.parse(last);
+        if(last[config.url]) {
+          config.draw.canvas.loadFromJSON(last[config.url]);
+          if (config.port.name === "page") {
+            config.draw.canvas.backgroundColor = "transparent";
+          }
+          /*  */
+          config.draw.canvas.renderAll();
         }
-        /*  */
-        config.draw.canvas.renderAll();
       }
 
     }
   },
   "draw": {
     "mode": '',
+    "cache": {},
     "screen": 0,
     "history": [],
     "canvas": null,
@@ -329,7 +336,13 @@ var config  = {
     "options": {"width": 800, "height": 800},
     "save": function () {
       var current = config.draw.history[config.draw.history.length - 1];
-      config.storage.write("last.draw", JSON.stringify(current));
+      const lastId = config.storage.load("last.id") !== undefined ? config.storage.load("last.id") : config.id;
+      if (lastId !== config.id) {
+        /* Fetch again */
+        config.draw.cache = config.storage.load("last.draw") !== undefined ? JSON.parse(config.storage.load("last.draw")): {};
+      }
+      config.draw.cache[config.url] = current;
+      config.storage.write("last.draw", JSON.stringify(config.draw.cache));
     },
     "copy": function () {
       var active = config.draw.canvas.getActiveObject();
@@ -589,6 +602,10 @@ var config  = {
         config.listeners.window.scrollY(e);
       });
       /*  */
+      background.receive("url", function (e) {
+        config.listeners.window.url(e);
+      });
+      /*  */
       config.draw.shape.stroke.color.addEventListener("input", function () {
         config.storage.write("stroke.color", this.value);
       });
@@ -687,7 +704,16 @@ var config  = {
           content: `${deleteIcon}Clear`,
           divider: "top", // top, bottom, top-bottom
           events: {
-            click: (e) => config.draw.canvas.clear()
+            click: (e) => {
+              const lastId = config.storage.load("last.id") !== undefined ? config.storage.load("last.id") : config.id;
+              if (lastId !== config.id) {
+                /* Fetch again */
+                config.draw.cache = config.storage.load("last.draw") ? JSON.parse(config.storage.load("last.draw")) : {};
+              }
+              delete config.draw.cache[config.url];
+              config.storage.write("last.draw", JSON.stringify(config.draw.cache));
+              config.draw.canvas.clear();
+            }
           }
         }
       ];
@@ -819,6 +845,19 @@ var config  = {
     var crosshair = document.getElementById('crosshair');
     var controls = document.querySelector(".controls");
     /*  */
+    function makeid(length) {
+      var result           = '';
+      var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      var charactersLength = characters.length;
+      for ( var i = 0; i < length; i++ ) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+      }
+      return result;
+    }
+    config.id = makeid(25);
+    /*  */
+    config.draw.cache = config.storage.load("last.draw") ? JSON.parse(config.storage.load("last.draw")) : {};
+    /*  */
     var drawing = false;
     window.addEventListener('mousemove', (e)=> {
       const mouseY = e.clientY;
@@ -904,7 +943,13 @@ var config  = {
     clear.addEventListener("click", function () {
       var flag = window.confirm("Are you sure you want to clear all drawings?");
       if (flag) {
-        config.storage.write("last.draw", '');
+        const lastId = config.storage.load("last.id") !== undefined ? config.storage.load("last.id") : config.id;
+        if (lastId !== config.id) {
+          /* Fetch again */
+          config.draw.cache = config.storage.load("last.draw") ? JSON.parse(config.storage.load("last.draw")) : {};
+        }
+        delete config.draw.cache[config.url];
+        config.storage.write("last.draw", JSON.stringify(config.draw.cache));
         config.draw.canvas.clear();
       }
     });
@@ -928,6 +973,9 @@ var config  = {
   },
   "listeners": {
     "window": {
+      "url": function (url) {
+        config.url = url;
+      },
       "scrollY": function (scrollYPos) {
         var vpt = config.draw.canvas.viewportTransform;
         vpt[5] = scrollYPos * -1;
@@ -944,6 +992,7 @@ var config  = {
           var screen = JSON.stringify(config.draw.canvas);
           if (config.draw.history.indexOf(screen) === -1) {
             config.draw.history.push(screen);
+            config.draw.save();
           }
         }, 300);
       }

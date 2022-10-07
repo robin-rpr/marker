@@ -27,7 +27,6 @@ if (!background) {
       }
     }
   })();
-
   /*  */
   var ticking = false;
   document.addEventListener('scroll', () => {
@@ -40,9 +39,13 @@ if (!background) {
       ticking = true;
     }
   });
-  
+  /*  */
+  var domain = (new URL(window.location.href));
+  background.send("url", domain.hostname);
+  /*  */
   var config = {
     "scrollY": null,
+    "url": null,
     "iframe": null,
     "interface": {
       "print": function () {    

@@ -98,6 +98,7 @@ body {
   transition: all 0.25s ease-out;
   padding: 3px 32px 6px 32px;
   margin: 4px;
+  background: rgb(201 221 229 / 29%);
 }
 
 #shrink:hover {
