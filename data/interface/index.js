@@ -309,17 +309,19 @@ var config  = {
       config.draw.brushing.controls.style.display = "block";
       /*  */
       var last = config.storage.read("last.draw");
-      if (config.url) {
+      background.send("whoami");
+      background.receive("whoami", function (e) {
+        var url = new URL(e);
+        var key = url.hostname + url.pathname;
         if (last) {
-          config.draw.canvas.loadFromJSON(JSON.parse(last)[config.url]);
+          config.draw.canvas.loadFromJSON(JSON.parse(last)[key]);
           if (config.port.name === "page") {
             config.draw.canvas.backgroundColor = "transparent";
           }
           /*  */
           config.draw.canvas.renderAll();
         }
-      }
-
+      });
     }
   },
   "draw": {
@@ -853,7 +855,8 @@ var config  = {
     /*  */
     background.send("whoami");
     background.receive("whoami", function (e) {
-      config.url = new URL(e).hostname;
+      var url = new URL(e);
+      config.url = url.hostname + url.pathname;
     });
     /*  */
     config.draw.cache = config.storage.read("last.draw") ? JSON.parse(config.storage.read("last.draw")) : {};
