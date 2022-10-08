@@ -311,17 +311,35 @@ var config  = {
       var last = config.storage.read("last.draw");
       background.send("whoami");
       background.receive("whoami", function (e) {
-        var url = new URL(e);
-        var key = url.hostname + url.pathname;
-        if (last) {
-          config.draw.canvas.loadFromJSON(JSON.parse(last)[key]);
-          if (config.port.name === "page") {
-            config.draw.canvas.backgroundColor = "transparent";
+        setTimeout(function () {
+          var url = new URL(e);
+          var key = url.hostname + url.pathname;
+          if (last) {
+            config.draw.canvas.loadFromJSON(JSON.parse(last)[key]);
+            if (config.port.name === "page") {
+              config.draw.canvas.backgroundColor = "transparent";
+            }
+            /*  */
+            config.draw.canvas.renderAll();
           }
-          /*  */
-          config.draw.canvas.renderAll();
-        }
+        }, 30);
       });
+    }
+  },
+  "toast": {
+    "show": function (message) {
+      const container = document.querySelector(".toast-container");
+      
+      details = container.querySelector("#toast > .content > .details");
+      details.innerHTML = message;
+      container.classList.remove("hide");
+      container.classList.add("show");
+    },
+    "hide": function () {
+      const container = document.querySelector(".toast-container");
+
+      container.classList.remove("show");
+      container.classList.add("hide");
     }
   },
   "draw": {
@@ -330,6 +348,7 @@ var config  = {
     "screen": 0,
     "history": [],
     "canvas": null,
+    "disabled": false,
     "background": {},
     "clipboard": null,
     "keyborad": {"code": null},
@@ -427,21 +446,37 @@ var config  = {
         config.draw.screen -= 1;
       }
     },
+    "toggle": function () {
+      if(config.draw.disabled) {
+        background.send("enable");
+        config.draw.enable();
+      } else {
+        background.send("disable");
+        config.draw.disable();
+      }
+    },
     "disable": function () {
-      var target = document.querySelector('.canvas-container');
-      target.style.pointerEvents = 'none';
+      config.draw.disabled = true;
+      config.toast.show('Press <span class="key">ESC</span> to enable Drawing');
 
-      var target = document.querySelector('.controls');
-      target.style.opacity = '0.7';
-      target.style.cursor = 'pointer';
+      var enabled = document.querySelector("#enabled");
+      var disabled = document.querySelector("#disabled");
+      var tool = document.querySelector("#tool");
+      
+      tool.innerText = "Mouse"
+      enabled.style.display = "none";
+      disabled.style.display = "block";
     },
     "enable": function () {
-      var target = document.querySelector('.canvas-container');
-      target.style.pointerEvents = 'auto';
+      config.draw.disabled = false;
+      config.toast.hide();
 
-      var target = document.querySelector('.controls');
-      target.style.opacity = '1';
-      target.style.cursor = 'normal';
+      var enabled = document.querySelector("#enabled");
+      var disabled = document.querySelector("#disabled");
+      var tool = document.querySelector("#tool");
+      tool.innerText = "Pen"
+      enabled.style.display = "block";
+      disabled.style.display = "none";
     },
     "remove": {
       "active": {
@@ -914,9 +949,13 @@ var config  = {
       chrome.tabs.create({"url": url, "active": true});
     }, false);
     /*  */
-    controls.addEventListener("click", function () {
-      config.draw.enable()
-    }, false)
+    background.receive("enable", function () {
+      config.draw.enable();
+    })
+    /*  */
+    background.receive("disable", function () {
+      config.draw.disable();
+    })
     /*  */
     document.addEventListener("keydown", function (e) {
       var key = e.key ? e.key : e.code;
@@ -925,7 +964,7 @@ var config  = {
       /*  */
       config.draw.keyborad.code = code;
       /*  */
-      if (code === 27) config.draw.disable();
+      if (code === 27) config.draw.toggle();
       if (e.ctrlKey && code === 67) config.draw.copy();
       if (e.ctrlKey && code === 89) config.draw.redo();
       if (e.ctrlKey && code === 90) config.draw.undo();

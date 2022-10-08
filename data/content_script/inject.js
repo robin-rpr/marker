@@ -20,7 +20,7 @@ if (!background) {
       },
       "send": function (id, data) {
         chrome.runtime.sendMessage({
-          "method": id, 
+          "method": id,
           "data": data,
           "path": "page-to-background"
         });
@@ -40,12 +40,36 @@ if (!background) {
     }
   });
   /*  */
+  document.addEventListener("keydown", function (e) {
+    var code = e.keyCode ? e.keyCode : e.which;
+    /*  */
+    if (code === 27) {
+      if (config.interface.disabled) {
+        background.send("enable");
+        config.interface.enable();
+      } else {
+        background.send("disable");
+        config.interface.disable();
+      }
+    }
+  });
+  /*  */
   var config = {
     "scrollY": null,
     "iframe": null,
     "interface": {
-      "url": function () {
-        background.send("whoami");
+      "disabled": false,
+      "whoami": function () {
+        console.log(window.scrollY);
+        background.send("scrollY", window.scrollY);
+      },
+      "disable": function () {
+        config.iframe.style.pointerEvents = "none";
+        config.interface.disabled = true;
+      },
+      "enable": function () {
+        config.iframe.style.pointerEvents = "auto";
+        config.interface.disabled = false;
       },
       "print": function () {
         window.print();
@@ -55,7 +79,7 @@ if (!background) {
         config.interface[config.iframe ? "hide" : "show"]();
       },
       "hide": function () {
-        background.send("icon", {"path": "OFF"});
+        background.send("icon", "OFF");
         config.iframe.remove();
       },
       "show": function () {
@@ -74,15 +98,18 @@ if (!background) {
         config.iframe.style.position = "fixed";
         config.iframe.style.zIndex = "2147483647";
         config.iframe.style.background = "transparent";
+        config.iframe.style.pointerEvents = "auto";
         /*  */
         document.documentElement.appendChild(config.iframe);
-        background.send("icon", {"path": "ON"});
+        background.send("icon", "ON");
       }
     }
   };
   /*  */
   background.receive("close", config.interface.hide);
   background.receive("print", config.interface.print);
+  background.receive("disable", config.interface.disable);
+  background.receive("enable", config.interface.enable);
   background.receive("whoami", config.interface.whoami);
 }
 
