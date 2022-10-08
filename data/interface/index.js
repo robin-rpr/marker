@@ -309,10 +309,9 @@ var config  = {
       config.draw.brushing.controls.style.display = "block";
       /*  */
       var last = config.storage.read("last.draw");
-      if (last) {
-        last = JSON.parse(last);
-        if(last[config.url]) {
-          config.draw.canvas.loadFromJSON(last[config.url]);
+      if (config.url) {
+        if (last) {
+          config.draw.canvas.loadFromJSON(JSON.parse(last)[config.url]);
           if (config.port.name === "page") {
             config.draw.canvas.backgroundColor = "transparent";
           }
@@ -336,10 +335,10 @@ var config  = {
     "options": {"width": 800, "height": 800},
     "save": function () {
       var current = config.draw.history[config.draw.history.length - 1];
-      const lastId = config.storage.load("last.id") !== undefined ? config.storage.load("last.id") : config.id;
+      const lastId = config.storage.read("last.id") !== undefined ? config.storage.read("last.id") : config.id;
       if (lastId !== config.id) {
         /* Fetch again */
-        config.draw.cache = config.storage.load("last.draw") !== undefined ? JSON.parse(config.storage.load("last.draw")): {};
+        config.draw.cache = config.storage.read("last.draw") !== undefined ? JSON.parse(config.storage.read("last.draw")): {};
       }
       config.draw.cache[config.url] = current;
       config.storage.write("last.draw", JSON.stringify(config.draw.cache));
@@ -602,10 +601,6 @@ var config  = {
         config.listeners.window.scrollY(e);
       });
       /*  */
-      background.receive("url", function (e) {
-        config.listeners.window.url(e);
-      });
-      /*  */
       config.draw.shape.stroke.color.addEventListener("input", function () {
         config.storage.write("stroke.color", this.value);
       });
@@ -705,10 +700,10 @@ var config  = {
           divider: "top", // top, bottom, top-bottom
           events: {
             click: (e) => {
-              const lastId = config.storage.load("last.id") !== undefined ? config.storage.load("last.id") : config.id;
+              const lastId = config.storage.read("last.id") !== undefined ? config.storage.read("last.id") : config.id;
               if (lastId !== config.id) {
                 /* Fetch again */
-                config.draw.cache = config.storage.load("last.draw") ? JSON.parse(config.storage.load("last.draw")) : {};
+                config.draw.cache = config.storage.read("last.draw") ? JSON.parse(config.storage.read("last.draw")) : {};
               }
               delete config.draw.cache[config.url];
               config.storage.write("last.draw", JSON.stringify(config.draw.cache));
@@ -856,7 +851,12 @@ var config  = {
     }
     config.id = makeid(25);
     /*  */
-    config.draw.cache = config.storage.load("last.draw") ? JSON.parse(config.storage.load("last.draw")) : {};
+    background.send("whoami");
+    background.receive("whoami", function (e) {
+      config.url = new URL(e).hostname;
+    });
+    /*  */
+    config.draw.cache = config.storage.read("last.draw") ? JSON.parse(config.storage.read("last.draw")) : {};
     /*  */
     var drawing = false;
     window.addEventListener('mousemove', (e)=> {
@@ -943,10 +943,10 @@ var config  = {
     clear.addEventListener("click", function () {
       var flag = window.confirm("Are you sure you want to clear all drawings?");
       if (flag) {
-        const lastId = config.storage.load("last.id") !== undefined ? config.storage.load("last.id") : config.id;
+        const lastId = config.storage.read("last.id") !== undefined ? config.storage.read("last.id") : config.id;
         if (lastId !== config.id) {
           /* Fetch again */
-          config.draw.cache = config.storage.load("last.draw") ? JSON.parse(config.storage.load("last.draw")) : {};
+          config.draw.cache = config.storage.read("last.draw") ? JSON.parse(config.storage.read("last.draw")) : {};
         }
         delete config.draw.cache[config.url];
         config.storage.write("last.draw", JSON.stringify(config.draw.cache));
@@ -973,9 +973,6 @@ var config  = {
   },
   "listeners": {
     "window": {
-      "url": function (url) {
-        config.url = url;
-      },
       "scrollY": function (scrollYPos) {
         var vpt = config.draw.canvas.viewportTransform;
         vpt[5] = scrollYPos * -1;

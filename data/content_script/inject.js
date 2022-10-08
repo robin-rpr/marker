@@ -40,15 +40,14 @@ if (!background) {
     }
   });
   /*  */
-  var domain = (new URL(window.location.href));
-  background.send("url", domain.hostname);
-  /*  */
   var config = {
     "scrollY": null,
-    "url": null,
     "iframe": null,
     "interface": {
-      "print": function () {    
+      "url": function () {
+        background.send("whoami");
+      },
+      "print": function () {
         window.print();
       },
       "toggle": function () {
@@ -84,6 +83,7 @@ if (!background) {
   /*  */
   background.receive("close", config.interface.hide);
   background.receive("print", config.interface.print);
+  background.receive("whoami", config.interface.whoami);
 }
 
 config.interface.toggle();
