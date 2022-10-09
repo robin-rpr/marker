@@ -40,20 +40,6 @@ if (!background) {
     }
   });
   /*  */
-  document.addEventListener("keydown", function (e) {
-    var code = e.keyCode ? e.keyCode : e.which;
-    /*  */
-    if (code === 27) {
-      if (config.interface.disabled) {
-        background.send("enable");
-        config.interface.enable();
-      } else {
-        background.send("disable");
-        config.interface.disable();
-      }
-    }
-  });
-  /*  */
   var config = {
     "scrollY": null,
     "iframe": null,
@@ -111,6 +97,20 @@ if (!background) {
   background.receive("disable", config.interface.disable);
   background.receive("enable", config.interface.enable);
   background.receive("whoami", config.interface.whoami);
+  /*  */
+  document.addEventListener("keydown", function (e) {
+    var code = e.keyCode ? e.keyCode : e.which;
+    /*  */
+    if (code === 27) {
+      if (config.interface.disabled) {
+        background.send("enable");
+        config.interface.enable();
+      } else {
+        background.send("disable");
+        config.interface.disable();
+      }
+    }
+  });
 }
 
 config.interface.toggle();
