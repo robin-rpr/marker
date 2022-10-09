@@ -1,5 +1,5 @@
 
-<img title="Install" src="https://blog.mozilla.org/addons/files/2020/04/get-the-addon-fx-apr-2020.svg" height=64 href="https://addons.mozilla.org/en-US/firefox/addon/marker-ink/" align="right" /><img title="Draw" src="logo.png" height=64 align="left" />
+<a href="https://addons.mozilla.org/en-US/firefox/addon/marker-ink/"><img title="Install" src="https://blog.mozilla.org/addons/files/2020/04/get-the-addon-fx-apr-2020.svg" height=64  align="right"/></a><img title="Draw" src="logo.png" height=64 align="left" />
 
 <br />
 <br />
