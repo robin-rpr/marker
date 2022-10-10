@@ -926,7 +926,9 @@ var config  = {
     })
     /*  */
     background.receive("erase", function () {
-      config.listeners.selector.eraser();
+      if(config.draw.selector !== "Mouse") {
+        config.listeners.selector.eraser();
+      }
     })
     /*  */
     background.receive("disable", function () {
@@ -940,7 +942,7 @@ var config  = {
       /*  */
       config.draw.keyborad.code = code;
       /*  */
-      if (code === 8 && config.draw.selector !== "Eraser") {
+      if (code === 8 && config.draw.selector === "Pencil") {
         config.listeners.selector.eraser();
       } else if (code === 27 && config.draw.selector === "Eraser") {
         config.listeners.selector.reset();

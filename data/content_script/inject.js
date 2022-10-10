@@ -110,7 +110,9 @@ if (!background) {
       }
     }
     if (code === 8) {
-      background.send("erase");
+      if (!config.interface.disabled) {
+        background.send("erase");
+      }
     }
   });
 }
