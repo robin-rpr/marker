@@ -8,30 +8,33 @@
 
 ### Marker is a Mozilla Firefox Browser Add-On that lets you draw on any Website.
 
-Please first navigate to a website, then press on the toolbar button to activate the add-on. Once the interface appears on the page, please choose the desired mode. 
+Please first navigate to a website, then press on the toolbar button to activate the add-on. Once the interface appears on the page, please choose the desired mode. All drawings are Auto-Saved, revisit them anytime.
 
 <img title="Preview" src="preview.gif" width=48% align="center" style="display:block"/>
 
-### Available Modes
+### Features
 
 - Pen
-  This mode is for drawing with Mouse or Pen (touch-enabled devices) on the Page.
-- Eraser
-- Mouse `Press ESC`
-  This mode is to disable the Drawing and interact with the Page.
+- Eraser (With `Backspace`)
+- Mouse (With `ESC`)
+- Undo (With `⌘ Cmd` `Z`)
+- Redo (With `⌘ Cmd` `Y`)
+- Context Menu:
+  - Copy (With `⌘ Cmd` `C`)
+  - Paste (With `⌘ Cmd` `P`)
+  - Save (Download as PNG)
 
+### Roadmap
 *Coming Soon - (No ETA)*:
 - [ ] Additional Brushes
   You should be able to choose between Pen, Circle, or Spray Brush.
 - [ ] Geometry
   You can drag and drop, remove, resize, or rotate and zoom objects on the screen. 
 
-### Extras
-To Download the Page with your drawings on it or Clear the Board, use the Right-Click.
-And all drawings are Auto-Saved too!
+### Powered by 
+If you like this Extension, consider Donating or Contributing to these Projects:
 
-### Note
-this extension uses [fabric.js](https://github.com/fabricjs/fabric.js) 
+- [fabric.js 5.2.0](https://github.com/fabricjs/fabric.js) 
 Open-source JavaScript project for drawing on the HTML5 canvas element.
 
 ### Install
