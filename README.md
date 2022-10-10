@@ -1,16 +1,18 @@
 
-<a href="https://addons.mozilla.org/en-US/firefox/addon/marker-ink/"><img title="Install" src="https://blog.mozilla.org/addons/files/2020/04/get-the-addon-fx-apr-2020.svg" height="64"  align="right"/></a><img title="Marker" src="logo.png" height="64" align="left" />
+<img title="Marker" src="logo.png" height="64" align="left" />
 
 <br />
 <br />
 
 ---
 
-### Marker is a Mozilla Firefox Browser Add-On that lets you draw on any Website.
+### Marker is a Browser Add-On that lets you draw on any Website.
 
 Please first navigate to a website, then press on the toolbar button to activate the add-on. Once the interface appears on the page, please choose the desired mode. All drawings are Auto-Saved, revisit them anytime.
 
 <img title="Preview" src="preview.gif" width="443" align="center" style="display:block"/>
+
+> **Status:** Development (expect bug fixes and major updates)
 
 ### Features
 
@@ -25,21 +27,27 @@ Please first navigate to a website, then press on the toolbar button to activate
   - Save (Download as PNG)
 
 ### Roadmap
+
 *Coming Soon - (No ETA)*:
 - [ ] Additional Brushes
   You should be able to choose between Pen, Circle, or Spray Brush.
 - [ ] Geometry
   You can drag and drop, remove, resize, or rotate and zoom objects on the screen. 
 
-### Powered by 
+### Powered by
+
 If you like this Extension, consider Donating or Contributing to these Projects:
 
 - [fabric.js 5.2.0](https://github.com/fabricjs/fabric.js) 
 Open-source JavaScript project for drawing on the HTML5 canvas element.
 
 ### Install
-Firefox: https://addons.mozilla.org/en-US/firefox/addon/marker-ink/ 
 
-> **Status:** Development (expect bug fixes and major updates)
+This Extension has been created for Mozilla Firefox. "A Browser for people not for profit."
+To support a open Internet there is no intention to release this Add-On for Chrome/Opera/etc.
 
-Have a nice day! 😊
+<a href="https://addons.mozilla.org/en-US/firefox/addon/marker-ink/">
+  <img title="Install" src="https://blog.mozilla.org/addons/files/2020/04/get-the-addon-fx-apr-2020.svg" height="64"  align="left"/>
+</a>
+
+
