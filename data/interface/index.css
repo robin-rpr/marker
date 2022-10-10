@@ -417,7 +417,7 @@ html[context="webapp"] .controls {
 .toast-container #toast{
   background: #fff;
   padding: 7px 20px;
-  border-radius: 12px;
+  border-radius: 50%;
   box-shadow: 0 6px 32.8px #54566039, 0 3px 9px #282b3945;
   width: fit-content;
   display: flex;
