@@ -46,10 +46,10 @@ Open-source JavaScript project for drawing on the HTML5 canvas element.
 ### Install
 
 This Project has been created for Mozilla Firefox. A Browser for people not for profit.
-To support an open Internet there is no intention to release this Add-On for Chrome/Opera/Edge/etc.
+To support an open Internet there is no intention to officially release this Add-On for Chromium based Browsers. [Why?](https://www.eff.org/deeplinks/2021/12/googles-manifest-v3-still-hurts-privacy-security-innovation)
 
 <a href="https://addons.mozilla.org/en-US/firefox/addon/marker-ink/">
-  <img title="Install" src="https://blog.mozilla.org/addons/files/2020/04/get-the-addon-fx-apr-2020.svg" height="64"  align="left"/>
+  <img title="Install" src="https://blog.mozilla.org/addons/files/2020/04/get-the-addon-fx-apr-2020.svg" height="64" align="left"/>
 </a>
 
 
