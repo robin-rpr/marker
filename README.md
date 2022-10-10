@@ -10,8 +10,7 @@
 
 Please first navigate to a website, then press on the toolbar button to activate the add-on. Once the interface appears on the page, please choose the desired mode. 
 
-<img title="Draw" src="preview1.png" width=48% align="left" />
-<img title="Draw" src="preview2.png" width=48% align="left" />
+<img title="Preview1" src="preview1.png" width=48% align="left" /><img title="Preview2" src="preview2.png" width=48% align="left" />
 
 ### Available Modes
 
