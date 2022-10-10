@@ -38,12 +38,14 @@ Please first navigate to a website, then press on the toolbar button to activate
 
 If you like this Extension, consider Donating or Contributing to these Projects:
 
+- [Draw on Page](https://github.com/leocompson/draw)
+Open-source Drawing Extension by leocompson. Marker has been forked from Draw on Page.
 - [fabric.js 5.2.0](https://github.com/fabricjs/fabric.js) 
 Open-source JavaScript project for drawing on the HTML5 canvas element.
 
 ### Install
 
-This Extension has been created for Mozilla Firefox. "A Browser for people not for profit."
+This Project has been created for Mozilla Firefox. A Browser for people not for profit.
 To support an open Internet there is no intention to release this Add-On for Chrome/Opera/Edge/etc.
 
 <a href="https://addons.mozilla.org/en-US/firefox/addon/marker-ink/">
