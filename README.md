@@ -12,7 +12,7 @@ Please first navigate to a website, then press on the toolbar button to activate
 
 <img title="Preview" src="preview.gif" width="443" align="center" style="display:block"/>
 
-> **Status:** Development (expect bug fixes and major updates)
+> **Status:** Stable (expect bug fixes and minor updates)
 
 ### Features
 
