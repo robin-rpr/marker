@@ -60,6 +60,7 @@ body {
   border-radius: 12px;
   background: white;
   backdrop-filter: blur(40px);
+  box-shadow: 0 1px 14.8px #404B8E61;
 }
 
 .options {
@@ -75,6 +76,46 @@ body {
   padding: 0;
   text-align: left;
   margin-bottom: 10px;
+  position: relative;
+}
+
+.item.selectable {
+  margin: 0;
+  border: 0;
+  padding: 0;
+  height: 99px;
+  width: 83px;
+  text-align: left;
+  margin-bottom: 0px !important;
+  position: relative;
+}
+
+.item.selectable > .title {
+  margin-bottom: 6px !important;
+}
+
+.item > .selection {
+  display: flex;
+  right: 0px;
+  flex-direction: row-reverse;
+  flex-wrap: nowrap;
+  align-items: flex-end;
+  background: #ffffff;
+  max-width: calc(83px - 16.5px);
+  overflow: hidden;
+  transition: all 0.25s ease-in-out;
+  position: absolute;
+  border-radius: 12px;
+  z-index: 2147484647;
+  padding: 10px 0px;
+  padding-right: 16.5px;
+}
+.item > .selection svg {
+  padding-left: 16.5px;
+}
+.item > .selection:hover {
+  max-width: calc(83px * 2 - 16.5px);
+  box-shadow: 0 1px 14.8px #404B8E61;
 }
 
 .item:last-child {
@@ -220,25 +261,6 @@ html[context="popup"] #print {display: none}
 html[context="page"] .close {
   left: 1px;
   display: block;
-}
-
-html[context="page"] .actions {
-  top: 43px;
-  left: 1px;
-}
-
-html[context="page"] .controls {
-  box-shadow: 0 1px 14.8px #404B8E61;
-}
-
-html[context="webapp"] .toolbar {
-  display: none;
-}
-
-html[context="webapp"] .controls {
-  top: 1px;
-  right: 1px;
-  left: unset;
 }
 
 @media print {

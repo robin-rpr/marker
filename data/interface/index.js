@@ -836,9 +836,10 @@ var config  = {
     var support = document.getElementById("support");
     var zoomout = document.getElementById("zoom-out");
     var donation = document.getElementById("donation");
-    var cursor = document.getElementById('cursor');
-    var crosshair = document.getElementById('crosshair');
-    var controls = document.querySelector(".controls");
+    var cursor = document.getElementById("cursor");
+    var crosshair = document.getElementById("crosshair");
+    var pencil = document.getElementById("pencil");
+    var eraser = document.getElementById("eraser");
     /*  */
     function makeid(length) {
       var result           = '';
@@ -944,7 +945,7 @@ var config  = {
       /*  */
       if (code === 8 && config.draw.selector === "Pencil") {
         config.listeners.selector.eraser();
-      } else if (code === 27 && config.draw.selector === "Eraser") {
+      } else if (code === 8 && config.draw.selector === "Eraser") {
         config.listeners.selector.reset();
       } else if (code === 27 && config.draw.selector === "Mouse") {
         background.send("enable");
@@ -954,10 +955,10 @@ var config  = {
         config.listeners.selector.mouse();
       }
       /*  */
-      if (e.ctrlKey && code === 67) config.draw.copy();
-      if (e.ctrlKey && code === 89) config.draw.redo();
-      if (e.ctrlKey && code === 90) config.draw.undo();
-      if (e.ctrlKey && code === 86) config.draw.paste();
+      if ((e.metaKey || e.ctrlKey) && code === 67) config.draw.copy();
+      if ((e.metaKey || e.ctrlKey) && code === 89) config.draw.redo();
+      if ((e.metaKey || e.ctrlKey) && code === 90) config.draw.undo();
+      if ((e.metaKey || e.ctrlKey) && code === 86) config.draw.paste();
       if (code === 46) config.draw.remove.active.objects();
       if (arrow) config.draw.action.move(code, e.shiftKey);
       if (code === 188 || code === 190) config.draw.action.resize(code);
@@ -998,6 +999,8 @@ var config  = {
     zoomout.addEventListener("click", function () {config.draw.zoom.out()});
     png.addEventListener("click", function () {config.draw.convert.to.png()});
     reload.addEventListener("click", function () {document.location.reload()});
+    eraser.addEventListener("click", function () {config.listeners.selector.eraser()});
+    pencil.addEventListener("click", function () {config.listeners.selector.pencil()});
     /*  */
     config.storage.load(config.app.start);
     window.removeEventListener("load", config.load, false);
@@ -1096,8 +1099,6 @@ var config  = {
       },
       "eraser": function () {
         if (config.draw.selector !== "Eraser") {
-          config.toast.show('Use <span class="key">ESC</span> to exit Eraser');
-
           var pencil = document.querySelector("#pencil");
           var eraser = document.querySelector("#eraser");
           var mouse = document.querySelector("#mouse");
@@ -1105,9 +1106,9 @@ var config  = {
           document.querySelector("#draw-brushing-line-color").disabled = true;
           
           tool.innerText = "Eraser"
-          pencil.style.display = "none";
+          pencil.style.order = "2";
           mouse.style.display = "none";
-          eraser.style.display = "block";
+          eraser.style.order = "1";
 
           config.draw.lastMode = config.draw.mode;
           config.draw.mode = "brushing";
@@ -1130,9 +1131,10 @@ var config  = {
           document.querySelector("#draw-brushing-line-color").disabled = true;
           
           tool.innerText = "Mouse"
-          pencil.style.display = "none";
-          eraser.style.display = "none";
+          pencil.style.order = "3";
           mouse.style.display = "block";
+          mouse.style.order = "1";
+          eraser.style.order = "2";
 
           config.draw.lastSelector = config.draw.selector;
           config.draw.selector = "Mouse";
@@ -1147,12 +1149,14 @@ var config  = {
           var mouse = document.querySelector("#mouse");
           var eraser = document.querySelector("#eraser");
           var tool = document.querySelector("#tool");
-          document.querySelector("#draw-brushing-line-color").disabled = false;
+          setTimeout(function () {
+            document.querySelector("#draw-brushing-line-color").disabled = false;
+          }, 30);
           
           tool.innerText = "Pen"
-          pencil.style.display = "block";
-          eraser.style.display = "none";
+          pencil.style.order = "1";
           mouse.style.display = "none";
+          eraser.style.order = "2";
 
           config.draw.lastMode = config.draw.mode;
           config.draw.mode = "brushing";
