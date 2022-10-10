@@ -295,16 +295,6 @@ var config  = {
       config.draw.canvas.on("mouse:down", config.listeners.mouse.down);
       config.draw.canvas.on("mouse:up", config.listeners.mouse.up);
       /*  */
-      window.setTimeout(function () {
-        if (config.draw.mode === "brushing") {
-          var brushing = config.draw.brushing.selector.getAttribute("selected");
-          if (brushing) config.draw.brushing.selector.querySelector('#' + brushing).setAttribute("selected", '');
-        } else {
-          var shape = config.draw.shape.selector.getAttribute("selected");
-          if (shape) config.draw.shape.selector.querySelector('#' + shape).setAttribute("selected", '');
-        }
-      }, 300);
-      /*  */
       config.draw.canvas.isDrawingMode = config.draw.mode === "brushing";
       config.draw.brushing.controls.style.display = "block";
       /*  */
@@ -343,7 +333,10 @@ var config  = {
     }
   },
   "draw": {
-    "mode": '',
+    "mode": "brushing",
+    "selector": "Pencil",
+    "lastMode": "brushing",
+    "lastSelector": "Pencil",
     "cache": {},
     "screen": 0,
     "history": [],
@@ -445,38 +438,6 @@ var config  = {
         config.draw.canvas.renderAll();
         config.draw.screen -= 1;
       }
-    },
-    "toggle": function () {
-      if(config.draw.disabled) {
-        background.send("enable");
-        config.draw.enable();
-      } else {
-        background.send("disable");
-        config.draw.disable();
-      }
-    },
-    "disable": function () {
-      config.draw.disabled = true;
-      config.toast.show('Press <span class="key">ESC</span> to enable Drawing');
-
-      var enabled = document.querySelector("#enabled");
-      var disabled = document.querySelector("#disabled");
-      var tool = document.querySelector("#tool");
-      
-      tool.innerText = "Mouse"
-      enabled.style.display = "none";
-      disabled.style.display = "block";
-    },
-    "enable": function () {
-      config.draw.disabled = false;
-      config.toast.hide();
-
-      var enabled = document.querySelector("#enabled");
-      var disabled = document.querySelector("#disabled");
-      var tool = document.querySelector("#tool");
-      tool.innerText = "Pen"
-      enabled.style.display = "block";
-      disabled.style.display = "none";
     },
     "remove": {
       "active": {
@@ -589,10 +550,12 @@ var config  = {
             var key = value + "Brush";
             config.draw.canvas.freeDrawingBrush = new fabric[key](config.draw.canvas, {"originX": "center", "originY": "center"});
             if (config.draw.canvas.freeDrawingBrush) {
-              var opacity = config.draw.convert.to.hexadecimal(config.draw.brushing.line.opacity.value * 255);
-              config.draw.canvas.freeDrawingBrush.color = config.draw.brushing.line.color.value + opacity;
+              if (key !== "Eraser") {
+                var opacity = config.draw.convert.to.hexadecimal(config.draw.brushing.line.opacity.value * 255);
+                config.draw.canvas.freeDrawingBrush.color = config.draw.brushing.line.color.value + opacity;
+                config.draw.canvas.freeDrawingBrush.shadow = new fabric.Shadow(config.draw.brushing.options(config.draw.brushing.shadow));
+              }
               config.draw.canvas.freeDrawingBrush.width = parseInt(config.draw.brushing.line.width.value, 10) || 1;
-              config.draw.canvas.freeDrawingBrush.shadow = new fabric.Shadow(config.draw.brushing.options(config.draw.brushing.shadow));
             }
           }
         }
@@ -902,11 +865,16 @@ var config  = {
       const mouseX = e.clientX;
       crosshair.style.transform = `translate3d(calc(${mouseX}px - 50%), calc(${mouseY}px - 50%), 0)`;
       cursor.style.transform = `translate3d(calc(${mouseX}px - 50%), calc(${mouseY}px - 50%), 0)`;
-      if (drawing) {
+      if (drawing && config.draw.selector !== "Eraser") {
         crosshair.style.display = 'block';
       } else {
         cursor.style.display = 'block';
       }
+    })
+    window.addEventListener('mousein', (e) => {
+      drawing = false;
+      crosshair.style.display = 'none';
+      cursor.style.display = 'block';
     })
     window.addEventListener('mouseout', (e) => {
       drawing = false;
@@ -915,13 +883,17 @@ var config  = {
     })
     window.addEventListener('mousedown', (e) => {
       drawing = true;
-      crosshair.style.display = 'block';
-      cursor.style.display = 'none';
+      if (config.draw.selector !== "Eraser") {
+        crosshair.style.display = 'block';
+        cursor.style.display = 'none';
+      }
     })
     window.addEventListener('mouseup', (e) => {
       drawing = false;
-      crosshair.style.display = 'none';
-      cursor.style.display = 'block';
+      if (config.draw.selector !== "Eraser") {
+        crosshair.style.display = 'none';
+        cursor.style.display = 'block';
+      }
     })
     /*  */
     config.draw.brushing.controls = document.querySelector(".controls");
@@ -950,11 +922,15 @@ var config  = {
     }, false);
     /*  */
     background.receive("enable", function () {
-      config.draw.enable();
+      config.listeners.selector.reset();
+    })
+    /*  */
+    background.receive("erase", function () {
+      config.listeners.selector.eraser();
     })
     /*  */
     background.receive("disable", function () {
-      config.draw.disable();
+      config.listeners.selector.mouse();
     })
     /*  */
     document.addEventListener("keydown", function (e) {
@@ -964,7 +940,18 @@ var config  = {
       /*  */
       config.draw.keyborad.code = code;
       /*  */
-      if (code === 27) config.draw.toggle();
+      if (code === 8 && config.draw.selector !== "Eraser") {
+        config.listeners.selector.eraser();
+      } else if (code === 27 && config.draw.selector === "Eraser") {
+        config.listeners.selector.reset();
+      } else if (code === 27 && config.draw.selector === "Mouse") {
+        background.send("enable");
+        config.listeners.selector.reset();
+      } else if (code === 27 && config.draw.selector !== "Mouse") {
+        background.send("disable");
+        config.listeners.selector.mouse();
+      }
+      /*  */
       if (e.ctrlKey && code === 67) config.draw.copy();
       if (e.ctrlKey && code === 89) config.draw.redo();
       if (e.ctrlKey && code === 90) config.draw.undo();
@@ -1096,38 +1083,102 @@ var config  = {
     },
     "selector": {
       "reset": function () {
-        [...config.draw.shape.selector.querySelectorAll("button")].map(function (e) {e.removeAttribute("selected")});
-        [...config.draw.brushing.selector.querySelectorAll("button")].map(function (e) {e.removeAttribute("selected")});
+        if (config.draw.selector === "Pencil") return; /* Nothing to reset */
+        if (config.draw.selector === "Eraser" || config.draw.selector === "Mouse") {
+          config.toast.hide();
+          config.draw.lastMode = "brushing";
+          config.draw.lastSelector = "Pencil";
+        }
+        /*  */
+        config.listeners.selector[config.draw.lastSelector.toLowerCase()]();
       },
-      "brushing": function (e) {
-        if (e && e.target) {
+      "eraser": function () {
+        if (config.draw.selector !== "Eraser") {
+          config.toast.show('Use <span class="key">ESC</span> to exit Eraser');
+
+          var pencil = document.querySelector("#pencil");
+          var eraser = document.querySelector("#eraser");
+          var mouse = document.querySelector("#mouse");
+          var tool = document.querySelector("#tool");
+          document.querySelector("#draw-brushing-line-color").disabled = true;
+          
+          tool.innerText = "Eraser"
+          pencil.style.display = "none";
+          mouse.style.display = "none";
+          eraser.style.display = "block";
+
+          config.draw.lastMode = config.draw.mode;
           config.draw.mode = "brushing";
-          config.listeners.selector.reset();
-          e.target.setAttribute("selected", '');
+          config.draw.lastSelector = config.draw.selector;
+          config.draw.selector = "Eraser";
           config.draw.canvas.isDrawingMode = true;
-          this.setAttribute("selected", e.target.id);
+          config.draw.brushing.selector.setAttribute("selected", config.draw.selector);
+          /*  */
+          config.draw.brushing.update();
+        }
+      },
+      "mouse": function () {
+        if (config.draw.selector !== "Mouse") {
+          config.toast.show('Use <span class="key">ESC</span> to exit Mouse');
+    
+          var pencil = document.querySelector("#pencil");
+          var mouse = document.querySelector("#mouse");
+          var eraser = document.querySelector("#eraser");
+          var tool = document.querySelector("#tool");
+          document.querySelector("#draw-brushing-line-color").disabled = true;
+          
+          tool.innerText = "Mouse"
+          pencil.style.display = "none";
+          eraser.style.display = "none";
+          mouse.style.display = "block";
+
+          config.draw.lastSelector = config.draw.selector;
+          config.draw.selector = "Mouse";
+          config.draw.lastMode = config.draw.mode;
+          config.draw.mode = "";
+        }
+      },
+      "pencil": function () {
+        if (config.draw.selector !== "Pencil") {
+
+          var pencil = document.querySelector("#pencil");
+          var mouse = document.querySelector("#mouse");
+          var eraser = document.querySelector("#eraser");
+          var tool = document.querySelector("#tool");
+          document.querySelector("#draw-brushing-line-color").disabled = false;
+          
+          tool.innerText = "Pen"
+          pencil.style.display = "block";
+          eraser.style.display = "none";
+          mouse.style.display = "none";
+
+          config.draw.lastMode = config.draw.mode;
+          config.draw.mode = "brushing";
+          config.draw.lastSelector = config.draw.selector;
+          config.draw.selector = "Pencil";
+          config.draw.canvas.isDrawingMode = true;
+          config.draw.brushing.selector.setAttribute("selected", config.draw.selector);
           config.storage.write("draw.mode", config.draw.mode);
           /*  */
           config.draw.brushing.update();
-          config.storage.write("brushing.selector", e.target.id);
+          config.storage.write("brushing.selector", config.draw.selector);
         }
       },
-      "shape": function (e) {
-        if (e && e.target) {
+      "shape": function (value) {
+        if (value) {
           config.draw.mode = "shape";
-          config.listeners.selector.reset();
+          config.draw.selector = value;
           config.draw.canvas.selection = true;
-          e.target.setAttribute("selected", '');
           config.draw.canvas.isDrawingMode = false;
-          this.setAttribute("selected", e.target.id);
+          config.draw.brushing.shape.setAttribute("selected", value);
           config.storage.write("draw.mode", config.draw.mode);
-          config.storage.write("shape.selector", e.target.id);
+          config.storage.write("shape.selector", value);
           /*  */
-          if (e.target.id === "Move") {
+          if (value === "Move") {
             config.draw.canvas.selection = true;
           }
           /*  */
-          if (e.target.id === "Circle") {
+          if (value === "Circle") {
             config.draw.canvas.add(new fabric.Circle({
               "top": 200, 
               "left": 200,
@@ -1141,7 +1192,7 @@ var config  = {
             }));
           }
           /*  */
-          if (e.target.id === "Hexagon") {
+          if (value === "Hexagon") {
             var points = config.draw.shape.generate.regular.polygon.points(6, 200);
             config.draw.canvas.add(new fabric.Polygon(points, {
               "top": 200, 
@@ -1155,7 +1206,7 @@ var config  = {
             }));
           }
           /*  */
-          if (e.target.id === "Octagon") {
+          if (value === "Octagon") {
             var points = config.draw.shape.generate.regular.polygon.points(8, 200);
             config.draw.canvas.add(new fabric.Polygon(points, {
               "top": 200, 
@@ -1169,7 +1220,7 @@ var config  = {
             }));
           }
           /*  */
-          if (e.target.id === "Triangle") {
+          if (value === "Triangle") {
             config.draw.canvas.add(new fabric.Triangle({
               "top": 150, 
               "left": 200,
@@ -1184,7 +1235,7 @@ var config  = {
             }));
           }
           /*  */
-          if (e.target.id === "Rect") {
+          if (value === "Rect") {
             config.draw.canvas.add(new fabric.Rect({
               "top": 150,
               "left": 250,

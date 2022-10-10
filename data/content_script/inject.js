@@ -46,7 +46,6 @@ if (!background) {
     "interface": {
       "disabled": false,
       "whoami": function () {
-        console.log(window.scrollY);
         background.send("scrollY", window.scrollY);
       },
       "disable": function () {
@@ -109,6 +108,9 @@ if (!background) {
         background.send("disable");
         config.interface.disable();
       }
+    }
+    if (code === 8) {
+      background.send("erase");
     }
   });
 }

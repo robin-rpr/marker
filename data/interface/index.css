@@ -41,7 +41,7 @@ body {
   height: 12px;
   border: 1px solid #AEAEAE;
   border-radius: 50%;
-  display: block;
+  display: none;
   position: absolute;
 }
 
