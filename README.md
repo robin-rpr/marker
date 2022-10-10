@@ -10,18 +10,23 @@
 
 Please first navigate to a website, then press on the toolbar button to activate the add-on. Once the interface appears on the page, please choose the desired mode. 
 
-<img title="Preview1" src="preview1.png" width=48% align="left" /><img title="Preview2" src="preview2.png" width=48% align="left" />
+<img title="Preview" src="preview.gif" width=48% align="center" style="display:block"/>
 
 ### Available Modes
 
 - Pen
-- Brushes `(Coming Soon)`
-  This mode is for drawing with Mouse or Pen (touch-enabled devices) on the page.
-  You can choose a Pencil, Circle, or Spray brush in this mode. 
-- Geometry `(Coming Soon)`
-  You can drag and drop, remove, resize, or rotate and zoom objects on the screen. 
+  This mode is for drawing with Mouse or Pen (touch-enabled devices) on the Page.
+- Eraser
 - Mouse `Press ESC`
+  This mode is to disable the Drawing and interact with the Page.
 
+*Coming Soon - (No ETA)*:
+- [ ] Additional Brushes
+  You should be able to choose between Pen, Circle, or Spray Brush.
+- [ ] Geometry
+  You can drag and drop, remove, resize, or rotate and zoom objects on the screen. 
+
+### Extras
 To Download the Page with your drawings on it or Clear the Board, use the Right-Click.
 And all drawings are Auto-Saved too!
 
