@@ -1089,8 +1089,8 @@ var config  = {
     "selector": {
       "reset": function () {
         if (config.draw.selector === "Pencil") return; /* Nothing to reset */
-        if (config.draw.selector === "Eraser" || config.draw.selector === "Mouse") {
-          config.toast.hide();
+        if (config.draw.selector === "Mouse") config.toast.hide();
+        if (config.draw.selector === "Eraser") {
           config.draw.lastMode = "brushing";
           config.draw.lastSelector = "Pencil";
         }
