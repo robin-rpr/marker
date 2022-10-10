@@ -1,5 +1,5 @@
 
-<a href="https://addons.mozilla.org/en-US/firefox/addon/marker-ink/"><img title="Install" src="https://blog.mozilla.org/addons/files/2020/04/get-the-addon-fx-apr-2020.svg" height=64  align="right"/></a><img title="Draw" src="logo.png" height=64 align="left" />
+<a href="https://addons.mozilla.org/en-US/firefox/addon/marker-ink/"><img title="Install" src="https://blog.mozilla.org/addons/files/2020/04/get-the-addon-fx-apr-2020.svg" height="64"  align="right"/></a><img title="Marker" src="logo.png" height="64" align="left" />
 
 <br />
 <br />
@@ -10,7 +10,7 @@
 
 Please first navigate to a website, then press on the toolbar button to activate the add-on. Once the interface appears on the page, please choose the desired mode. All drawings are Auto-Saved, revisit them anytime.
 
-<img title="Preview" src="preview.gif" width=48% align="center" style="display:block"/>
+<img title="Preview" src="preview.gif" width="443" align="center" style="display:block"/>
 
 ### Features
 
