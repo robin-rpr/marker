@@ -10,7 +10,11 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "web-ext lint",
     "start": "web-ext run",
-    "build": "web-ext build"
+    "build": "mkdir dist && cp -r data lib background.js LICENSE.md README.md manifest.v2.json manifest.v3.json dist",
+    "pack": "npm run pack:v2 && npm run pack:v3",
+    "pack:v2": "mv ./dist/manifest.v2.json ./dist/manifest.json && zip-build dist web-ext-artifacts --template \"%NAME%-%VERSION%-v2.%EXT%\"",
+    "pack:v3": "mv ./dist/manifest.v3.json ./dist/manifest.json && zip-build dist web-ext-artifacts --template \"%NAME%-%VERSION%-v3.%EXT%\"",
+    "clean": "rm -r dist && rm -r web-ext-artifacts"
   },
   "repository": {
     "type": "git",
@@ -23,6 +27,7 @@
   },
   "homepage": "https://marker.ink",
   "devDependencies": {
-    "web-ext": "^7.2.0"
+    "web-ext": "^7.2.0",
+    "zip-build": "^1.7.0"
   }
 }
