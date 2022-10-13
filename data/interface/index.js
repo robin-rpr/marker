@@ -1190,7 +1190,7 @@ var config  = {
             document.querySelector("#draw-brushing-line-color").disabled = false;
             document.querySelector("#draw-brushing-line-opacity").disabled = false;
             document.querySelector("#draw-brushing-line-width").disabled = false;
-            config.draw.brushing.line.color.value = config.storage.read("line.color");
+            config.draw.brushing.line.color.value = config.storage.read("line.color") !== undefined ? config.storage.read("line.color") : "#0169FF";
             var opacity = config.draw.convert.to.hexadecimal(config.draw.brushing.line.opacity.value * 255);
             config.draw.canvas.freeDrawingBrush.color = config.draw.brushing.line.color.value + opacity;
             config.controls.update();
