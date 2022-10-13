@@ -153,9 +153,13 @@ var config  = {
         return luma > 120;
       }      
 
-      /* Background */
-      var target = document.querySelector("#color");
-      target.style.fill = config.draw.brushing.line.color.value;
+      if(!config.draw.brushing.line.color.disabled) {
+        var target = document.querySelector("#color");
+        target.style.fill = config.draw.brushing.line.color.value;
+
+        var target = document.querySelector("#color-selector");
+        target.style.fill = config.draw.brushing.line.color.value;
+      }
 
       var target = document.querySelector("#opacity");
       target.style.background = config.draw.convert.to.mix(
@@ -183,8 +187,13 @@ var config  = {
 
 
       /* Contrast */
-      var target = document.querySelector("#pen");
-      target.style.fill = isBright(config.draw.brushing.line.color.value) ? 'black' : 'white';
+      if(!config.draw.brushing.line.color.disabled) {
+        var target = document.querySelector("#pen");
+        target.style.fill = isBright(config.draw.brushing.line.color.value) ? 'black' : 'white';
+
+        var target = document.querySelector("#pen-selector");
+        target.style.fill = isBright(config.draw.brushing.line.color.value) ? 'black' : 'white';
+      }
 
       var target = document.querySelector("#text");
       target.style.fill = isBright(config.draw.brushing.line.color.value) ? 'black' : 'white';
@@ -628,10 +637,12 @@ var config  = {
       });
       /*  */
       config.draw.brushing.line.color.addEventListener("input", function () {
-        config.storage.write("line.color", this.value);
-        var opacity = config.draw.convert.to.hexadecimal(config.draw.brushing.line.opacity.value * 255);
-        config.draw.canvas.freeDrawingBrush.color = this.value + opacity;
-        config.controls.update();
+        if(!config.draw.brushing.line.color.disabled) {
+          config.storage.write("line.color", this.value);
+          var opacity = config.draw.convert.to.hexadecimal(config.draw.brushing.line.opacity.value * 255);
+          config.draw.canvas.freeDrawingBrush.color = this.value + opacity;
+          config.controls.update();
+        }
       });
       /*  */
       config.draw.brushing.line.width.addEventListener("input", function () {
@@ -838,8 +849,8 @@ var config  = {
     var donation = document.getElementById("donation");
     var cursor = document.getElementById("cursor");
     var crosshair = document.getElementById("crosshair");
-    var pencil = document.getElementById("pencil");
-    var eraser = document.getElementById("eraser");
+    var pencil = document.getElementById("pencil-selector");
+    var eraser = document.getElementById("eraser-selector");
     /*  */
     function makeid(length) {
       var result           = '';
@@ -1099,16 +1110,28 @@ var config  = {
       },
       "eraser": function () {
         if (config.draw.selector !== "Eraser") {
+          var pencilSelector = document.querySelector("#pencil-selector");
+          var eraserSelector = document.querySelector("#eraser-selector");
+          var mouse = document.querySelector("#mouse");
           var pencil = document.querySelector("#pencil");
           var eraser = document.querySelector("#eraser");
-          var mouse = document.querySelector("#mouse");
           var tool = document.querySelector("#tool");
+
+          config.draw.brushing.line.color.value = "#c1d4d7";
+
           document.querySelector("#draw-brushing-line-color").disabled = true;
+          document.querySelector("#draw-brushing-line-opacity").disabled = true;
+          document.querySelector("#draw-brushing-line-width").disabled = false;
+
+          config.controls.update();
           
-          tool.innerText = "Eraser"
-          pencil.style.order = "2";
+          tool.innerText = "Eraser";
+          pencilSelector.classList.remove("active");
+          eraserSelector.classList.add("active");
+          eraserSelector.classList.add("active");
           mouse.style.display = "none";
-          eraser.style.order = "1";
+          pencil.style.display = "none";
+          eraser.style.display = "block";
 
           config.draw.lastMode = config.draw.mode;
           config.draw.mode = "brushing";
@@ -1124,17 +1147,27 @@ var config  = {
         if (config.draw.selector !== "Mouse") {
           config.toast.show('Use <span class="key">ESC</span> to exit Mouse');
     
-          var pencil = document.querySelector("#pencil");
+          var pencilSelector = document.querySelector("#pencil-selector");
+          var eraserSelector = document.querySelector("#eraser-selector");
           var mouse = document.querySelector("#mouse");
+          var pencil = document.querySelector("#pencil");
           var eraser = document.querySelector("#eraser");
           var tool = document.querySelector("#tool");
+
+          config.draw.brushing.line.color.value = "#c1d4d7";
+
           document.querySelector("#draw-brushing-line-color").disabled = true;
+          document.querySelector("#draw-brushing-line-opacity").disabled = true;
+          document.querySelector("#draw-brushing-line-width").disabled = true;
+
+          config.controls.update();
           
-          tool.innerText = "Mouse"
-          pencil.style.order = "3";
+          tool.innerText = "Mouse";
+          pencilSelector.classList.remove("active");
+          eraserSelector.classList.remove("active");
           mouse.style.display = "block";
-          mouse.style.order = "1";
-          eraser.style.order = "2";
+          pencil.style.display = "none";
+          eraser.style.display = "none";
 
           config.draw.lastSelector = config.draw.selector;
           config.draw.selector = "Mouse";
@@ -1145,18 +1178,30 @@ var config  = {
       "pencil": function () {
         if (config.draw.selector !== "Pencil") {
 
-          var pencil = document.querySelector("#pencil");
+          var pencilSelector = document.querySelector("#pencil-selector");
+          var eraserSelector = document.querySelector("#eraser-selector");
           var mouse = document.querySelector("#mouse");
+          var pencil = document.querySelector("#pencil");
           var eraser = document.querySelector("#eraser");
           var tool = document.querySelector("#tool");
+
+
           setTimeout(function () {
             document.querySelector("#draw-brushing-line-color").disabled = false;
+            document.querySelector("#draw-brushing-line-opacity").disabled = false;
+            document.querySelector("#draw-brushing-line-width").disabled = false;
+            config.draw.brushing.line.color.value = config.storage.read("line.color");
+            var opacity = config.draw.convert.to.hexadecimal(config.draw.brushing.line.opacity.value * 255);
+            config.draw.canvas.freeDrawingBrush.color = config.draw.brushing.line.color.value + opacity;
+            config.controls.update();
           }, 30);
           
-          tool.innerText = "Pen"
-          pencil.style.order = "1";
+          tool.innerText = "Pen";
+          eraserSelector.classList.remove("active");
+          pencilSelector.classList.add("active");
           mouse.style.display = "none";
-          eraser.style.order = "2";
+          pencil.style.display = "block";
+          eraser.style.display = "none";
 
           config.draw.lastMode = config.draw.mode;
           config.draw.mode = "brushing";

@@ -101,21 +101,46 @@ body {
   flex-wrap: nowrap;
   align-items: flex-end;
   background: #ffffff;
-  max-width: calc(83px - 16.5px);
+  max-width: 50px;
+  height: 62px;
   overflow: hidden;
   transition: all 0.25s ease-in-out;
+  opacity: 0;
   position: absolute;
-  border-radius: 12px;
   z-index: 2147484647;
-  padding: 10px 0px;
-  padding-right: 16.5px;
+  margin: 1px 7.5px;
+  padding: 3px;
+  border-radius: 80px;
 }
+
+.item > .selected {
+  pointer-events: none;
+  padding: 10px 16.5px;
+}
+
 .item > .selection svg {
-  padding-left: 16.5px;
+  padding-left: 16px;
+  padding: 6px;
 }
+
+.item > .selection svg.active {
+  border: 2px solid #d4e7ea;
+  padding: 4px;
+  border-radius: 31px;
+}
+
+.item > .selection svg:first-child {
+  margin-left: 2px;
+}
+
+.item > .selection svg.active:first-child {
+  border-bottom-left-radius: 10px;
+}
+
 .item > .selection:hover {
   max-width: calc(83px * 2 - 16.5px);
   box-shadow: 0 1px 14.8px #404B8E61;
+  opacity: 1;
 }
 
 .item:last-child {
@@ -181,13 +206,18 @@ body {
 input[type="range"] {
   margin: 0;
   padding: 0;
-  width: 63px;
+  width: 54px;
   height: 13px;
   cursor: pointer;
   margin-left: 5px;
   box-sizing: border-box;
   vertical-align: middle;
   -webkit-appearance: none;
+  pointer-events: auto;
+}
+
+input[type="range"]:disabled {
+  pointer-events: none;
 }
 
 input[type=range]:focus {
@@ -198,7 +228,7 @@ input[type=range]::-webkit-slider-runnable-track {
   width: 100%;
   height: 2px;
   cursor: pointer;
-  background: #DADADA;
+  background: #DDE6EA;
   border-radius: 2px;
 }
 
@@ -211,17 +241,23 @@ input[type=range]::-webkit-slider-thumb {
   border: none;
   -webkit-appearance: none;
   margin-top: -6.5px;
+  pointer-events: auto;
+}
+
+input[type=range]:disabled::-webkit-slider-thumb {
+  background: #DDE6EA;
+  pointer-events: none;
 }
 
 input[type=range]:focus::-webkit-slider-runnable-track {
-  background: #DADADA;
+  background: #DDE6EA;
 }
 
 input[type=range]::-moz-range-track {
   width: 100%;
   height: 2px;
   cursor: pointer;
-  background: #DADADA;
+  background: #DDE6EA;
   border-radius: 2px;
 }
 
@@ -233,6 +269,12 @@ input[type=range]::-moz-range-thumb {
   cursor: pointer;
   margin-top: -6.5px;
   border: none;
+  pointer-events: auto;
+}
+
+input[type=range]:disabled::-moz-range-thumb {
+  background: #DDE6EA;
+  pointer-events: none;
 }
 
 .controls .options input[type="color"] {
@@ -455,8 +497,8 @@ html[context="page"] .close {
 }
 #toast .content .key{
   padding: 3px 7px;
-  background: #444856;
-  border-radius: 6px;
+  background: #000000;
+  border-radius: 7px;
   color: #fff;
   font-size: 12px;
   margin: 0 4px;
