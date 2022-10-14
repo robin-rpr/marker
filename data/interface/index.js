@@ -181,10 +181,9 @@ var config  = {
       target.style.width = config.draw.brushing.line.width.value + 'px';
       target.style.height = config.draw.brushing.line.width.value + 'px';
 
-      var target = document.getElementById('cursor');
+      var target = document.getElementById("cursor");
       target.style.width = parseInt(config.draw.brushing.line.width.value) - 1 + 'px';
       target.style.height = parseInt(config.draw.brushing.line.width.value) - 1 + 'px';
-
 
       /* Contrast */
       if(!config.draw.brushing.line.color.disabled) {
@@ -848,7 +847,8 @@ var config  = {
     var zoomout = document.getElementById("zoom-out");
     var donation = document.getElementById("donation");
     var cursor = document.getElementById("cursor");
-    var crosshair = document.getElementById("crosshair");
+    var crosshair = document.querySelector("#cursor > .cursor.crosshair");
+    var brush = document.querySelector("#cursor > .cursor.brush");
     var pencil = document.getElementById("pencil-selector");
     var eraser = document.getElementById("eraser-selector");
     /*  */
@@ -875,36 +875,35 @@ var config  = {
     window.addEventListener('mousemove', (e)=> {
       const mouseY = e.clientY;
       const mouseX = e.clientX;
-      crosshair.style.transform = `translate3d(calc(${mouseX}px - 50%), calc(${mouseY}px - 50%), 0)`;
       cursor.style.transform = `translate3d(calc(${mouseX}px - 50%), calc(${mouseY}px - 50%), 0)`;
       if (drawing && config.draw.selector !== "Eraser") {
-        crosshair.style.display = 'block';
+        crosshair.style.display = 'grid';
       } else {
-        cursor.style.display = 'block';
+        brush.style.display = 'block';
       }
     })
     window.addEventListener('mousein', (e) => {
       drawing = false;
       crosshair.style.display = 'none';
-      cursor.style.display = 'block';
+      brush.style.display = 'block';
     })
     window.addEventListener('mouseout', (e) => {
       drawing = false;
       crosshair.style.display = 'none';
-      cursor.style.display = 'none';
+      brush.style.display = 'none';
     })
     window.addEventListener('mousedown', (e) => {
       drawing = true;
       if (config.draw.selector !== "Eraser") {
-        crosshair.style.display = 'block';
-        cursor.style.display = 'none';
+        crosshair.style.display = 'grid';
+        brush.style.display = 'none';
       }
     })
     window.addEventListener('mouseup', (e) => {
       drawing = false;
       if (config.draw.selector !== "Eraser") {
         crosshair.style.display = 'none';
-        cursor.style.display = 'block';
+        brush.style.display = 'grid';
       }
     })
     /*  */
