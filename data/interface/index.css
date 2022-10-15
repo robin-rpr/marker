@@ -386,7 +386,7 @@ html[context="page"] .close {
   padding: 0;
   display: flex;
   flex-direction: column;
-  z-index: 999999999;
+  z-index: 9999999999;
   box-shadow: 0 1px 14.8px #404B8E61;
 }
 .contextMenu-item {
