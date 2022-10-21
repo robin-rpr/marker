@@ -8,7 +8,7 @@
 # Theme Settings
 #
 # Review documentation to determine if you should use `theme` or `remote_theme`
-# https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/#installing-the-theme
+# https://github.com/pages-themes/minimal
 
 theme: jekyll-theme-minimal
 
