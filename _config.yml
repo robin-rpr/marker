@@ -1,1 +1,31 @@
+# Welcome to Jekyll!
+#
+# This config file is meant for settings that affect your entire site, values
+# which you are expected to set up once and rarely need to edit after that.
+# For technical reasons, this file is *NOT* reloaded automatically when you use
+# `jekyll serve`. If you change this file, please restart the server process.
+
+# Theme Settings
+#
+# Review documentation to determine if you should use `theme` or `remote_theme`
+# https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/#installing-the-theme
+
 theme: jekyll-theme-minimal
+
+# Site Settings
+locale             : "en-US"
+
+# Site Author
+author:
+  name             : "Robin Röper"
+  avatar           : "/_assets/images/bio-photo.png"
+  bio              : "Software Engineer by day, hospital worker by night."
+  location         : "Munich, Germany"
+  email            : "rr@linux.com"
+  links:
+    - label: "Email"
+      icon: "fas fa-fw fa-envelope-square"
+      url: "mailto:rr@linux.com"
+    - label: "Twitter"
+      icon: "fas fa-fw fa-link"
+      url: "https://twitter.com/_robinrpr"
