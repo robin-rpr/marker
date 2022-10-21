@@ -14,18 +14,5 @@ theme: jekyll-theme-minimal
 
 # Site Settings
 locale             : "en-US"
-
-# Site Author
-author:
-  name             : "Robin Röper"
-  avatar           : "/_assets/images/bio-photo.png"
-  bio              : "Software Engineer by day, hospital worker by night."
-  location         : "Munich, Germany"
-  email            : "rr@linux.com"
-  links:
-    - label: "Email"
-      icon: "fas fa-fw fa-envelope-square"
-      url: "mailto:rr@linux.com"
-    - label: "Twitter"
-      icon: "fas fa-fw fa-link"
-      url: "https://twitter.com/_robinrpr"
+title              : "Marker"
+name               : "Robin Röper"
