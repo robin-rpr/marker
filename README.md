@@ -52,4 +52,5 @@ To support an open Internet there is no intention to officially release this Add
   <img title="Install" src="https://blog.mozilla.org/addons/files/2020/04/get-the-addon-fx-apr-2020.svg" height="64" align="left"/>
 </a>
 
+<br />
 
