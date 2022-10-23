@@ -16,12 +16,14 @@ Please first navigate to a website, then press on the toolbar button to activate
 
 ### Features
 
-- Pen
-- Eraser (With `Backspace`)
-- Mouse (With `ESC`)
-- Undo (With `⌘ Cmd` `Z`)
-- Redo (With `⌘ Cmd` `Y`)
-- Context Menu:
+- A Pen
+- A Eraser (Try `Backspace` to switch easily)
+- A Mouse Mode (Toggle with `ESC` Key)
+
+#### The Pro tips!
+- Undo (With `⌘ Cmd` + Z)
+- Redo (With `⌘ Cmd` + Y)
+- And try right-click!
   - Copy (With `⌘ Cmd` `C`)
   - Paste (With `⌘ Cmd` `P`)
   - Save (Download as PNG)
