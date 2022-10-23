@@ -21,8 +21,8 @@ Please first navigate to a website, then press on the toolbar button to activate
 - A Mouse Mode (Toggle with `ESC` Key)
 
 #### The Pro tips!
-- Undo (With `⌘ Cmd` + Z)
-- Redo (With `⌘ Cmd` + Y)
+- Undo (With `⌘ Cmd` `Z`)
+- Redo (With `⌘ Cmd` `Y`)
 - And try right-click!
   - Copy (With `⌘ Cmd` `C`)
   - Paste (With `⌘ Cmd` `P`)
