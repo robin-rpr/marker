@@ -182,8 +182,13 @@ var config  = {
       target.style.height = config.draw.brushing.line.width.value + 'px';
 
       var target = document.getElementById("cursor");
-      target.style.width = parseInt(config.draw.brushing.line.width.value) - 1 + 'px';
-      target.style.height = parseInt(config.draw.brushing.line.width.value) - 1 + 'px';
+      if (parseInt(config.draw.brushing.line.width.value) < 5) {
+        target.style.width = 5 + 'px';
+        target.style.height = 5 + 'px';
+      } else {
+        target.style.width = parseInt(config.draw.brushing.line.width.value) - 1 + 'px';
+        target.style.height = parseInt(config.draw.brushing.line.width.value) - 1 + 'px';
+      }
 
       /* Contrast */
       if(!config.draw.brushing.line.color.disabled) {
